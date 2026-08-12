@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflexor Portfolio Knowledge Base — Architecture</title>
+<style>
+:root{
+  /* dark canvas */
+  --canvas-bg:#0d0f14;
+  --canvas-bg-2:#10131a;
+  --dot:rgba(255,255,255,0.07);
+  --node-bg:#1b1e28;
+  --node-bg-hi:#22263300;
+  --node-border:rgba(255,255,255,0.12);
+  --node-text:#eef0f5;
+  --node-sub:#8b93a3;
+  --zone-border:rgba(255,255,255,0.09);
+  --zone-label:#a7afc0;
+
+  /* category accents */
+  --cat-trigger:#ff6d5a;
+  --cat-process:#4c8dff;
+  --cat-ai:#a56eff;
+  --cat-storage:#22c58b;
+  --cat-decision:#f5a623;
+  --cat-output:#29b6c6;
+
+  /* light detail area */
+  --d-bg:#f7f8fa;
+  --d-card:#ffffff;
+  --d-border:#e3e6ec;
+  --d-text:#14161c;
+  --d-text-dim:#5b6472;
+  --d-text-dimmer:#9aa3b2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--d-bg);
+  color:var(--d-text);
+}
+
+/* ---------- HEADER ---------- */
+.page-header{
+  background:var(--canvas-bg);
+  color:#eef0f5;
+  padding:34px 40px 26px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.page-header .eyebrow{
+  font-size:12.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--cat-output);
+  font-weight:700;
+  margin-bottom:8px;
+}
+.page-header h1{
+  margin:0 0 8px;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-0.01em;
+}
+.page-header p{
+  margin:0;
+  color:var(--node-sub);
+  font-size:14.5px;
+  max-width:820px;
+  line-height:1.55;
+}
+
+/* ---------- LEGEND ---------- */
+.legend-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  padding:14px 40px;
+  background:var(--canvas-bg-2);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  font-size:12.5px;
+  color:var(--zone-label);
+}
+.legend-item{display:flex;align-items:center;gap:7px;}
+.legend-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+
+/* ---------- CANVAS ---------- */
+.canvas-wrap{
+  position:relative;
+  overflow-x:auto;
+  overflow-y:hidden;
+  background:
+    radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size:22px 22px;
+  background-color:var(--canvas-bg);
+  padding:36px 0;
+}
+.scroll-hint{
+  position:sticky;
+  left:0;
+  display:inline-block;
+  margin:0 0 16px 40px;
+  font-size:12px;
+  color:var(--zone-label);
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:999px;
+  padding:5px 12px;
+}
+.canvas{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  gap:40px;
+  padding:0 40px 20px;
+  min-width:max-content;
+}
+svg.edges{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+  overflow:visible;
+  pointer-events:none;
+}
+.edge{
+  fill:none;
+  stroke:rgba(255,255,255,0.28);
+  stroke-width:1.6;
+  transition:stroke .15s, stroke-width .15s, opacity .15s;
+}
+.edge-pass{stroke:rgba(34,197,139,0.55);}
+.edge-fail{stroke:rgba(245,166,35,0.6);}
+.edge-dashed{stroke-dasharray:4 4; stroke:rgba(255,255,255,0.18);}
+.edge.hl{stroke:#eef0f5; stroke-width:2.4; opacity:1;}
+.edge-pass.hl{stroke:var(--cat-storage);}
+.edge-fail.hl{stroke:var(--cat-decision);}
+.edge-label{
+  fill:var(--zone-label);
+  font-size:10px;
+  text-anchor:middle;
+  font-family:inherit;
+}
+
+/* ---------- ZONES ---------- */
+.zone{
+  position:relative;
+  z-index:2;
+  flex:0 0 auto;
+  border:1px dashed var(--zone-border);
+  border-radius:16px;
+  padding:34px 18px 18px;
+  min-height:640px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:rgba(255,255,255,0.015);
+}
+.zone-label{
+  position:absolute;
+  top:12px;
+  left:18px;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:700;
+  color:var(--zone-label);
+}
+.zone-label .n{
+  font-weight:500;
+  text-transform:none;
+  letter-spacing:0;
+  color:var(--node-sub);
+  margin-left:6px;
+}
+.zone-rows{display:flex;flex-direction:column;gap:22px;}
+.zone-row{display:flex;gap:18px;align-items:flex-start;justify-content:center;}
+.zone-row.stack{flex-direction:column;}
+
+/* ---------- NODES ---------- */
+.node{
+  width:198px;
+  background:var(--node-bg);
+  border:1px solid var(--node-border);
+  border-radius:11px;
+  padding:10px 12px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  cursor:pointer;
+  transition:transform .15s, border-color .15s, box-shadow .15s;
+  box-shadow:0 1px 2px rgba(0,0,0,0.4);
+}
+.node:hover, .node:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.45);
+  outline:none;
+}
+.node:hover .node-icon, .node:focus-visible .node-icon{filter:brightness(1.2);}
+.node-icon{
+  width:30px;height:30px;
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  flex:0 0 auto;
+}
+.node-title{font-size:12.5px;font-weight:700;color:var(--node-text);line-height:1.25;}
+.node-sub{font-size:10.5px;color:var(--node-sub);margin-top:2px;line-height:1.3;}
+.node-stack{
+  font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:9px;
+  color:var(--node-text);
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px;
+  padding:1.5px 5px;
+  margin-top:5px;
+  display:inline-block;
+  letter-spacing:.01em;
+}
+
+.node.cat-trigger{border-top:2px solid var(--cat-trigger);}
+.node.cat-trigger .node-icon{background:rgba(255,109,90,0.16);}
+.node.cat-process{border-top:2px solid var(--cat-process);}
+.node.cat-process .node-icon{background:rgba(76,141,255,0.16);}
+.node.cat-ai{border-top:2px solid var(--cat-ai);}
+.node.cat-ai .node-icon{background:rgba(165,110,255,0.16);}
+.node.cat-storage{border-top:2px solid var(--cat-storage);}
+.node.cat-storage .node-icon{background:rgba(34,197,139,0.16);}
+.node.cat-decision{border-top:2px solid var(--cat-decision);}
+.node.cat-decision .node-icon{background:rgba(245,166,35,0.16);}
+.node.cat-output{border-top:2px solid var(--cat-output);}
+.node.cat-output .node-icon{background:rgba(41,182,198,0.16);}
+
+.node.small{width:170px;}
+
+/* ---------- DETAIL AREA ---------- */
+.detail-wrap{
+  max-width:960px;
+  margin:0 auto;
+  padding:56px 28px 90px;
+}
+.detail-intro{
+  text-align:center;
+  margin-bottom:52px;
+}
+.detail-intro h2{
+  font-size:22px;
+  margin:0 0 10px;
+  font-weight:800;
+}
+.detail-intro p{
+  color:var(--d-text-dim);
+  font-size:14.5px;
+  max-width:640px;
+  margin:0 auto;
+  line-height:1.6;
+}
+
+.zone-section{margin-bottom:56px;}
+.zone-heading{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  margin-bottom:6px;
+  padding-bottom:12px;
+  border-bottom:2px solid var(--d-border);
+}
+.zone-heading h3{
+  font-size:19px;
+  margin:0;
+  font-weight:800;
+}
+.zone-heading span{
+  font-size:12px;
+  color:var(--d-text-dimmer);
+  font-weight:600;
+}
+
+.node-card{
+  scroll-margin-top:24px;
+  background:var(--d-card);
+  border:1px solid var(--d-border);
+  border-radius:12px;
+  padding:20px 22px;
+  margin-top:16px;
+  transition:box-shadow .3s, border-color .3s;
+}
+.node-card.flash{
+  border-color:var(--cat-output);
+  box-shadow:0 0 0 3px rgba(41,182,198,0.18);
+}
+.node-card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.node-card-icon{
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex:0 0 auto;
+}
+.node-card h4{margin:0;font-size:15px;font-weight:700;}
+.node-card p{margin:6px 0 0;font-size:13.5px;line-height:1.65;color:var(--d-text-dim);}
+.node-card p+p{margin-top:8px;}
+.node-card .tag{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:999px;
+  margin-top:8px;
+}
+.node-card .stackchip{
+  display:inline-block;
+  font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:11px;
+  color:var(--d-text);
+  background:var(--d-bg);
+  border:1px solid var(--d-border);
+  border-radius:5px;
+  padding:2px 8px;
+  margin-top:8px;
+  margin-left:6px;
+}
+.zone-codename{
+  font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  font-weight:800;
+  letter-spacing:.03em;
+}
+
+.cat-trigger-a{color:var(--cat-trigger);}
+.cat-process-a{color:var(--cat-process);}
+.cat-ai-a{color:var(--cat-ai);}
+.cat-storage-a{color:var(--cat-storage);}
+.cat-decision-a{color:var(--cat-decision);}
+.cat-output-a{color:var(--cat-output);}
+
+.icon-trigger{background:rgba(255,109,90,0.12);}
+.icon-process{background:rgba(76,141,255,0.12);}
+.icon-ai{background:rgba(165,110,255,0.12);}
+.icon-storage{background:rgba(34,197,139,0.12);}
+.icon-decision{background:rgba(245,166,35,0.12);}
+.icon-output{background:rgba(41,182,198,0.12);}
+
+/* strategic sections */
+.strategy-section{
+  margin-bottom:48px;
+  background:var(--d-card);
+  border:1px solid var(--d-border);
+  border-radius:14px;
+  padding:26px 28px;
+}
+.strategy-section h3{
+  font-size:18px;
+  margin:0 0 4px;
+  font-weight:800;
+}
+.strategy-section .sub{
+  font-size:12.5px;
+  color:var(--d-text-dimmer);
+  margin-bottom:16px;
+}
+.strategy-list{margin:0;padding:0;list-style:none;}
+.strategy-list li{
+  padding:10px 0;
+  border-top:1px solid var(--d-border);
+  font-size:13.5px;
+  line-height:1.6;
+  color:var(--d-text-dim);
+}
+.strategy-list li:first-child{border-top:none;}
+.strategy-list b{color:var(--d-text);}
+
+.mini-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+.mini-table th{
+  text-align:left;
+  font-size:11px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--d-text-dimmer);
+  padding:8px 10px;
+  border-bottom:1px solid var(--d-border);
+}
+.mini-table td{
+  padding:9px 10px;
+  border-bottom:1px solid var(--d-border);
+  color:var(--d-text-dim);
+  vertical-align:top;
+}
+.mini-table td:first-child, .mini-table th:first-child{font-weight:700;color:var(--d-text);}
+
+.build-seq{display:flex;flex-direction:column;gap:0;}
+.build-step{
+  display:flex;
+  gap:16px;
+  padding:14px 0;
+  border-top:1px solid var(--d-border);
+}
+.build-step:first-child{border-top:none;}
+.build-step .num{
+  flex:0 0 auto;
+  width:30px;height:30px;
+  border-radius:50%;
+  background:var(--d-bg);
+  border:1px solid var(--d-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:800;
+  color:var(--d-text);
+}
+.build-step .txt b{display:block;font-size:13.5px;color:var(--d-text);margin-bottom:2px;}
+.build-step .txt span{font-size:13px;color:var(--d-text-dim);line-height:1.55;}
+
+footer.foot{
+  text-align:center;
+  padding:30px 20px 50px;
+  color:var(--d-text-dimmer);
+  font-size:12px;
+}
+
+@media (max-width:720px){
+  .page-header{padding:26px 20px 20px;}
+  .legend-bar{padding:12px 20px;}
+  .detail-wrap{padding:40px 18px 70px;}
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="eyebrow">Inflexor Ventures · Portfolio Intelligence</div>
+  <h1>Portfolio Knowledge Base — System Architecture</h1>
+  <p>A queryable memory layer across ~30 portfolio companies — SHAs, term sheets, board decks, and a continuously-updated stream of call transcripts — answering both numeric questions ("revenue last 3 months?") and qualitative ones ("key risks right now?") with citations. Four named services move data through it: <b style="color:#eef0f5">Hermes</b> pulls it in, <b style="color:#eef0f5">Argus</b> classifies and extracts it, <b style="color:#eef0f5">Atlas</b> holds it, <b style="color:#eef0f5">Delphi</b> answers questions from it. Scroll the canvas below to trace the full pipeline — every node names the actual model or tool behind it; click any node to jump to its deep-dive.</p>
+</header>
+
+<div class="legend-bar">
+  <div class="legend-item"><span class="legend-dot" style="background:var(--cat-trigger)"></span>Source / trigger</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--cat-process)"></span>Processing / routing</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--cat-ai)"></span>AI / LLM step</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--cat-storage)"></span>Storage</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--cat-decision)"></span>Gate / human-in-loop</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--cat-output)"></span>Output</div>
+</div>
+
+<div class="canvas-wrap">
+  <div class="scroll-hint">⇆ scroll to explore the full pipeline</div>
+  <div class="canvas" id="canvas">
+    <svg class="edges" id="edgesSvg"><g id="edgesLayer"></g></svg>
+
+    <!-- ZONE A: INGESTION -->
+    <div class="zone">
+      <div class="zone-label"><span class="zone-codename">01 · HERMES</span><span class="n">ingestion · 5 sources</span></div>
+      <div class="zone-rows">
+        <div class="zone-row stack">
+          <div class="node cat-trigger" id="n-upload" data-target="#d-upload" tabindex="0">
+            <div class="node-icon">📤</div>
+            <div><div class="node-title">Manual Upload</div><div class="node-sub">Dashboard drag-and-drop</div><div class="node-stack">presigned S3 PUT</div></div>
+          </div>
+          <div class="node cat-trigger" id="n-email" data-target="#d-email" tabindex="0">
+            <div class="node-icon">📧</div>
+            <div><div class="node-title">Shared Inbox</div><div class="node-sub">deals@ / portfolio@ forwarding</div><div class="node-stack">Gmail API + Pub/Sub</div></div>
+          </div>
+          <div class="node cat-trigger" id="n-drive" data-target="#d-drive" tabindex="0">
+            <div class="node-icon">🗂️</div>
+            <div><div class="node-title">Google Drive</div><div class="node-sub">Watched company folders</div><div class="node-stack">Drive API v3 · changes.list</div></div>
+          </div>
+          <div class="node cat-trigger" id="n-docsend" data-target="#d-docsend" tabindex="0">
+            <div class="node-icon">🔗</div>
+            <div><div class="node-title">DocSend Links</div><div class="node-sub">Data-room / deck links</div><div class="node-stack">Playwright headless fetch</div></div>
+          </div>
+          <div class="node cat-trigger" id="n-webhook" data-target="#d-webhook" tabindex="0">
+            <div class="node-icon">⚡</div>
+            <div><div class="node-title">Call Transcripts</div><div class="node-sub">Fireflies webhook · Granola API</div><div class="node-stack">→ SQS queue</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE B: CLASSIFY & EXTRACT -->
+    <div class="zone">
+      <div class="zone-label"><span class="zone-codename">02 · ARGUS</span><span class="n">classify & extract · 7 steps</span></div>
+      <div class="zone-rows">
+        <div class="zone-row">
+          <div class="node cat-process" id="n-classifier" data-target="#d-classifier" tabindex="0">
+            <div class="node-icon">🔍</div>
+            <div><div class="node-title">Doc-Type Classifier</div><div class="node-sub">Routes by type</div><div class="node-stack">Claude Haiku 4.5</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-ai small" id="n-fin-extract" data-target="#d-fin-extract" tabindex="0">
+            <div class="node-icon">🧮</div>
+            <div><div class="node-title">Financial Extractor</div><div class="node-sub">Schema-enforced JSON</div><div class="node-stack">Sonnet 5 + Pydantic</div></div>
+          </div>
+          <div class="node cat-ai small" id="n-legal-extract" data-target="#d-legal-extract" tabindex="0">
+            <div class="node-icon">⚖️</div>
+            <div><div class="node-title">Legal Term Extractor</div><div class="node-sub">SHA / term sheet clauses</div><div class="node-stack">Sonnet 5 + Pydantic</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-ai small" id="n-transcript-sum" data-target="#d-transcript-sum" tabindex="0">
+            <div class="node-icon">📝</div>
+            <div><div class="node-title">Transcript Summarizer</div><div class="node-sub">Call → structured notes</div><div class="node-stack">Haiku 4.5 · map-reduce</div></div>
+          </div>
+          <div class="node cat-process small" id="n-chunk-embed" data-target="#d-chunk-embed" tabindex="0">
+            <div class="node-icon">🧩</div>
+            <div><div class="node-title">Chunk + Embed</div><div class="node-sub">Semantic chunking</div><div class="node-stack">Voyage 4 Large</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-decision small" id="n-gate" data-target="#d-gate" tabindex="0">
+            <div class="node-icon">🚦</div>
+            <div><div class="node-title">Confidence Gate</div><div class="node-sub">Below threshold → review</div><div class="node-stack">LangGraph conditional edge</div></div>
+          </div>
+          <div class="node cat-decision small" id="n-review" data-target="#d-review" tabindex="0">
+            <div class="node-icon">🙋</div>
+            <div><div class="node-title">Human Review Queue</div><div class="node-sub">Analyst confirms / corrects</div><div class="node-stack">internal Retool queue</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE C: STORAGE -->
+    <div class="zone">
+      <div class="zone-label"><span class="zone-codename">03 · ATLAS</span><span class="n">storage · 3 stores</span></div>
+      <div class="zone-rows">
+        <div class="zone-row stack">
+          <div class="node cat-storage" id="n-postgres" data-target="#d-postgres" tabindex="0">
+            <div class="node-icon">🐘</div>
+            <div><div class="node-title">Postgres</div><div class="node-sub">metrics · legal_terms · docs</div><div class="node-stack">Postgres 17, Supabase-managed</div></div>
+          </div>
+          <div class="node cat-storage" id="n-vector" data-target="#d-vector" tabindex="0">
+            <div class="node-icon">🧠</div>
+            <div><div class="node-title">pgvector</div><div class="node-sub">doc_chunks (hybrid index)</div><div class="node-stack">HNSW · cosine distance</div></div>
+          </div>
+          <div class="node cat-storage" id="n-objstore" data-target="#d-objstore" tabindex="0">
+            <div class="node-icon">📦</div>
+            <div><div class="node-title">Object Storage</div><div class="node-sub">Raw file archive</div><div class="node-stack">S3, versioned → Glacier</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE D: QUERY & RESPONSE -->
+    <div class="zone">
+      <div class="zone-label"><span class="zone-codename">04 · DELPHI</span><span class="n">query & response · 8 steps</span></div>
+      <div class="zone-rows">
+        <div class="zone-row">
+          <div class="node cat-trigger" id="n-trigger-q" data-target="#d-trigger-q" tabindex="0">
+            <div class="node-icon">💬</div>
+            <div><div class="node-title">Partner Question</div><div class="node-sub">Natural language, in chat</div><div class="node-stack">Slack bot + Next.js web chat</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-process" id="n-router" data-target="#d-router" tabindex="0">
+            <div class="node-icon">🔀</div>
+            <div><div class="node-title">Question Router</div><div class="node-sub">Structured vs. qualitative</div><div class="node-stack">Claude Haiku 4.5 classifier</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-process small" id="n-param-query" data-target="#d-param-query" tabindex="0">
+            <div class="node-icon">🎯</div>
+            <div><div class="node-title">Parametrized Query</div><div class="node-sub">Templates, not text-to-SQL</div><div class="node-stack">SQLAlchemy templates</div></div>
+          </div>
+          <div class="node cat-process small" id="n-retrieval" data-target="#d-retrieval" tabindex="0">
+            <div class="node-icon">🔎</div>
+            <div><div class="node-title">Hybrid Retrieval</div><div class="node-sub">Metadata filter + vector</div><div class="node-stack">pgvector + Postgres FTS (ts_rank)</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-process small" id="n-rerank" data-target="#d-rerank" tabindex="0">
+            <div class="node-icon">📶</div>
+            <div><div class="node-title">Rerank</div><div class="node-sub">Cross-encoder top-k</div><div class="node-stack">Cohere Rerank 4 Fast</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-ai" id="n-generate" data-target="#d-generate" tabindex="0">
+            <div class="node-icon">✍️</div>
+            <div><div class="node-title">Generate + Cite</div><div class="node-sub">Frontier model, forced citations</div><div class="node-stack">Claude Sonnet 5</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-decision" id="n-ground-check" data-target="#d-ground-check" tabindex="0">
+            <div class="node-icon">✅</div>
+            <div><div class="node-title">Groundedness Check</div><div class="node-sub">Every claim traced to a source</div><div class="node-stack">NLI verifier + Haiku judge</div></div>
+          </div>
+        </div>
+        <div class="zone-row">
+          <div class="node cat-output" id="n-dashboard" data-target="#d-dashboard" tabindex="0">
+            <div class="node-icon">💻</div>
+            <div><div class="node-title">Answer + Sources</div><div class="node-sub">Chat UI, citations attached</div><div class="node-stack">Next.js · streamed response</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ DETAIL AREA ============ -->
+<div class="detail-wrap">
+
+  <div class="detail-intro">
+    <h2>How each step works</h2>
+    <p>The diagram above is the real data flow — nothing decorative. Each card below expands the node it's named after; click a node up top and it'll scroll here and highlight.</p>
+  </div>
+
+  <!-- ZONE A DETAIL -->
+  <section class="zone-section">
+    <div class="zone-heading"><h3><span class="zone-codename">HERMES</span> — Ingestion</h3><span>Five inbound paths, one normalized intake</span></div>
+
+    <div class="node-card" id="d-upload">
+      <div class="node-card-head"><div class="node-card-icon icon-trigger">📤</div><h4>Manual Upload</h4></div>
+      <p>The fallback path for anything that doesn't arrive automatically — a partner drags a signed SHA or a one-off PDF into the dashboard. Lowest volume, highest variance in format, so it goes through the same classifier as everything else rather than a special-cased path.</p>
+      <span class="tag cat-trigger-a">Trigger</span><span class="stackchip">presigned S3 upload · React dropzone</span>
+    </div>
+
+    <div class="node-card" id="d-email">
+      <div class="node-card-head"><div class="node-card-icon icon-trigger">📧</div><h4>Shared Inbox</h4></div>
+      <p>A dedicated address (e.g. <code>portfolio@</code>) that partners and founders CC or forward to. Attachments are pulled automatically; the email body itself is kept as context (it often explains what changed) rather than discarded.</p>
+      <span class="tag cat-trigger-a">Trigger</span><span class="stackchip">Gmail API · Pub/Sub push</span>
+    </div>
+
+    <div class="node-card" id="d-drive">
+      <div class="node-card-head"><div class="node-card-icon icon-trigger">🗂️</div><h4>Google Drive</h4></div>
+      <p>Per-company watched folders, polled on a schedule via the Drive API. This is where most existing SHAs, term sheets and board decks already live today, so it's treated as the primary bulk-backfill source during initial rollout, not just a trickle feed.</p>
+      <span class="tag cat-trigger-a">Trigger</span><span class="stackchip">Drive API v3 · changes.list</span>
+    </div>
+
+    <div class="node-card" id="d-docsend">
+      <div class="node-card-head"><div class="node-card-icon icon-trigger">🔗</div><h4>DocSend Links</h4></div>
+      <p>Data-room and deck links shared by founders don't come as files — they're fetched (where access allows) and snapshotted so the knowledge base isn't dependent on a link staying live. Anything that can't be fetched automatically falls back to a manual-upload prompt.</p>
+      <span class="tag cat-trigger-a">Trigger</span><span class="stackchip">Playwright headless fetch + snapshot</span>
+    </div>
+
+    <div class="node-card" id="d-webhook">
+      <div class="node-card-head"><div class="node-card-icon icon-trigger">⚡</div><h4>Call Transcripts</h4></div>
+      <p>The two tools plug in differently, so the connector has to handle both patterns rather than treating them as interchangeable. Fireflies has a native webhook — a "transcription complete" event posts straight to an endpoint the moment a call is processed. Granola's API access is Enterprise-plan only (it also exposes an MCP server for agent-based access); short of that tier, ingestion runs through a Zapier-mediated webhook instead. Either way, a new transcript lands in the pipeline within minutes of the call ending, not on a batch delay.</p>
+      <span class="tag cat-trigger-a">Trigger</span><span class="stackchip">Fireflies webhook · Granola Enterprise API/MCP</span>
+    </div>
+  </section>
+
+  <!-- ZONE B DETAIL -->
+  <section class="zone-section">
+    <div class="zone-heading"><h3><span class="zone-codename">ARGUS</span> — Classify &amp; Extract</h3><span>One router, two parallel pipelines, one confidence gate</span></div>
+
+    <div class="node-card" id="d-classifier">
+      <div class="node-card-head"><div class="node-card-icon icon-process">🔍</div><h4>Doc-Type Classifier</h4></div>
+      <p>A cheap, fast model looks at the incoming document (or transcript) and tags it: term sheet, SHA, board deck, financial statement, call transcript, other. This tag decides which extractor(s) it's routed to next — it's the fork point between the structured and unstructured pipelines. Every raw file is also archived to object storage at this step, unconditionally, before anything else happens to it.</p>
+      <span class="tag cat-process-a">Processing</span><span class="stackchip">Claude Haiku 4.5 · structured output</span>
+    </div>
+
+    <div class="node-card" id="d-fin-extract">
+      <div class="node-card-head"><div class="node-card-icon icon-ai">🧮</div><h4>Structured Financial Extractor</h4></div>
+      <p>For financial statements and reports: a schema-enforced (JSON-mode) LLM call pulls specific fields — revenue, burn, runway, headcount — into a fixed structure rather than free text. This is what makes "what was revenue last 3 months?" a deterministic lookup later instead of a guess.</p>
+      <span class="tag cat-ai-a">AI step</span><span class="stackchip">Claude Sonnet 5 · JSON mode + Pydantic schema</span>
+    </div>
+
+    <div class="node-card" id="d-legal-extract">
+      <div class="node-card-head"><div class="node-card-icon icon-ai">⚖️</div><h4>Legal Term Extractor</h4></div>
+      <p>For SHAs and term sheets: another schema-enforced call, but tuned to legal structure — liquidation preference, anti-dilution, board composition, ESOP terms, information rights. Same principle as the financial extractor: turn prose into queryable fields instead of leaving it as text a model has to re-read every time.</p>
+      <span class="tag cat-ai-a">AI step</span><span class="stackchip">Claude Sonnet 5 · JSON mode + Pydantic schema</span>
+    </div>
+
+    <div class="node-card" id="d-transcript-sum">
+      <div class="node-card-head"><div class="node-card-icon icon-ai">📝</div><h4>Transcript Summarizer</h4></div>
+      <p>Raw call transcripts are long and noisy. Before embedding, each transcript is passed through a summarization step that produces a structured call note (topics discussed, decisions, action items, risks flagged) — this is what actually gets embedded alongside the raw transcript, so retrieval later surfaces the signal, not filler.</p>
+      <span class="tag cat-ai-a">AI step</span><span class="stackchip">Claude Haiku 4.5 · map-reduce summarization</span>
+    </div>
+
+    <div class="node-card" id="d-chunk-embed">
+      <div class="node-card-head"><div class="node-card-icon icon-process">🧩</div><h4>Chunk + Embed</h4></div>
+      <p>Everything that isn't cleanly structured (board deck prose, transcript summaries, qualitative sections of any document) is semantically chunked — tight, topic-coherent chunks rather than fixed-size windows — and embedded, tagged with company / doc-type / date metadata for filtering before search even happens.</p>
+      <span class="tag cat-process-a">Processing</span><span class="stackchip">Voyage 4 Large embeddings</span>
+    </div>
+
+    <div class="node-card" id="d-gate">
+      <div class="node-card-head"><div class="node-card-icon icon-decision">🚦</div><h4>Confidence Gate</h4></div>
+      <p>Every structured extraction returns a confidence score. Below threshold — an unusual clause, a number the model isn't sure it parsed correctly — it's routed to human review regardless of how "important" the field looks. Above threshold, it goes straight to Postgres. This is the one gate in the whole pipeline that can't be skipped for speed.</p>
+      <span class="tag cat-decision-a">Gate</span><span class="stackchip">LangGraph conditional edge · threshold rule</span>
+    </div>
+
+    <div class="node-card" id="d-review">
+      <div class="node-card-head"><div class="node-card-icon icon-decision">🙋</div><h4>Human Review Queue</h4></div>
+      <p>A short worklist an analyst clears — confirm or correct a low-confidence extraction. Corrections feed back into the record as-verified, and over time also become a signal for where the extractor prompts need tightening.</p>
+      <span class="tag cat-decision-a">Human-in-loop</span><span class="stackchip">internal Retool queue</span>
+    </div>
+  </section>
+
+  <!-- ZONE C DETAIL -->
+  <section class="zone-section">
+    <div class="zone-heading"><h3><span class="zone-codename">ATLAS</span> — Storage</h3><span>Deliberately two different stores for two different question types</span></div>
+
+    <div class="node-card" id="d-postgres">
+      <div class="node-card-head"><div class="node-card-icon icon-storage">🐘</div><h4>Postgres</h4></div>
+      <p>Holds everything that came out of structured extraction: <code>financial_metrics</code> (time-series, one row per company per period), <code>legal_terms</code> (keyed clauses per SHA/term sheet), and a <code>documents</code> table tracking every ingested file's metadata and lineage. This is what "revenue last 3 months" hits — a normal indexed query, not a model guessing from text.</p>
+      <span class="tag cat-storage-a">Storage</span><span class="stackchip">Postgres 17 · Supabase-managed</span>
+    </div>
+
+    <div class="node-card" id="d-vector">
+      <div class="node-card-head"><div class="node-card-icon icon-storage">🧠</div><h4>pgvector</h4></div>
+      <p>Holds <code>doc_chunks</code> — embeddings for everything that's inherently qualitative (deck narrative, transcript summaries, risk commentary), each tagged with company, doc type, and date so retrieval can pre-filter by metadata before doing the vector search itself. Same Postgres instance as the structured tables, different tables — one system to operate, not two.</p>
+      <span class="tag cat-storage-a">Storage</span><span class="stackchip">pgvector · HNSW index, cosine</span>
+    </div>
+
+    <div class="node-card" id="d-objstore">
+      <div class="node-card-head"><div class="node-card-icon icon-storage">📦</div><h4>Object Storage</h4></div>
+      <p>Every raw file, untouched, kept as the ground truth a citation can always be traced back to. If an extraction is ever disputed, this is what gets pulled up — the source of record behind every structured field and every chunk.</p>
+      <span class="tag cat-storage-a">Storage</span><span class="stackchip">S3 · versioned, lifecycle → Glacier</span>
+    </div>
+  </section>
+
+  <!-- ZONE D DETAIL -->
+  <section class="zone-section">
+    <div class="zone-heading"><h3><span class="zone-codename">DELPHI</span> — Query &amp; Response</h3><span>Route by question type, retrieve, generate, verify before it's shown</span></div>
+
+    <div class="node-card" id="d-trigger-q">
+      <div class="node-card-head"><div class="node-card-icon icon-trigger">💬</div><h4>Partner Question</h4></div>
+      <p>The only interface a partner needs is natural language — "what's Bellatrix's burn rate this quarter" or "what risks has the founder flagged in the last two calls." No query syntax, no filters to set manually.</p>
+      <span class="tag cat-trigger-a">Trigger</span><span class="stackchip">Slack bot + Next.js web chat</span>
+    </div>
+
+    <div class="node-card" id="d-router">
+      <div class="node-card-head"><div class="node-card-icon icon-process">🔀</div><h4>Question Router</h4></div>
+      <p>Classifies the question itself: does this need a precise number from structured data, a qualitative synthesis from documents, or both? Financial and factual questions go to parametrized query; "why," "risk," and "how is X going" questions go to retrieval. Many real questions hit both paths and get merged at generation.</p>
+      <span class="tag cat-process-a">Processing</span><span class="stackchip">Claude Haiku 4.5 · intent classifier</span>
+    </div>
+
+    <div class="node-card" id="d-param-query">
+      <div class="node-card-head"><div class="node-card-icon icon-process">🎯</div><h4>Parametrized Query</h4></div>
+      <p>Deliberately <em>not</em> open text-to-SQL. The router maps the question onto one of a fixed set of parametrized query templates (metric, company, date range) and executes that — reliable and auditable, at the cost of not handling arbitrarily novel structured questions. New recurring question shapes get promoted into new templates over time.</p>
+      <span class="tag cat-process-a">Processing</span><span class="stackchip">SQLAlchemy · parametrized templates</span>
+    </div>
+
+    <div class="node-card" id="d-retrieval">
+      <div class="node-card-head"><div class="node-card-icon icon-process">🔎</div><h4>Hybrid Retrieval</h4></div>
+      <p>Metadata filtering first (company, doc type, date window) to shrink the search space, then vector + keyword hybrid search within that filtered set. Filtering before searching is also the single biggest token-cost lever in the whole system — it keeps irrelevant chunks out of the context window before they're ever a cost.</p>
+      <span class="tag cat-process-a">Processing</span><span class="stackchip">pgvector cosine + Postgres FTS (ts_rank)</span>
+    </div>
+
+    <div class="node-card" id="d-rerank">
+      <div class="node-card-head"><div class="node-card-icon icon-process">📶</div><h4>Rerank</h4></div>
+      <p>A cross-encoder reorders the retrieved candidates for actual relevance to the question (vector similarity alone is a decent first pass, not a great final answer), and only the top few make it into the generation prompt.</p>
+      <span class="tag cat-process-a">Processing</span><span class="stackchip">Cohere Rerank 4 Fast</span>
+    </div>
+
+    <div class="node-card" id="d-generate">
+      <div class="node-card-head"><div class="node-card-icon icon-ai">✍️</div><h4>Generate + Cite</h4></div>
+      <p>The frontier model in the system — everything upstream exists to hand it a small, high-signal context instead of a firehose. It's prompted to cite a source for every factual claim it makes, structured data and retrieved chunks alike, not just write a fluent-sounding answer.</p>
+      <span class="tag cat-ai-a">AI step</span><span class="stackchip">Claude Sonnet 5 · forced-citation prompt</span>
+    </div>
+
+    <div class="node-card" id="d-ground-check">
+      <div class="node-card-head"><div class="node-card-icon icon-decision">✅</div><h4>Groundedness Check</h4></div>
+      <p>Before an answer ever reaches a partner, a verification pass checks that every claim in it actually traces back to a cited source (structured field or retrieved chunk) — this is the main hallucination-reduction control, separate from and after generation, not just a prompting instruction.</p>
+      <span class="tag cat-decision-a">Gate</span><span class="stackchip">NLI verifier + Claude Haiku judge rubric</span>
+    </div>
+
+    <div class="node-card" id="d-dashboard">
+      <div class="node-card-head"><div class="node-card-icon icon-output">💻</div><h4>Answer + Sources</h4></div>
+      <p>The final response, with every claim linking back to the underlying document, extracted field, or transcript it came from — so a partner can verify in one click rather than trusting the system blind.</p>
+      <span class="tag cat-output-a">Output</span><span class="stackchip">Next.js · streamed response</span>
+    </div>
+  </section>
+
+  <!-- STRATEGIC SECTIONS -->
+  <div class="strategy-section">
+    <h3>Token Economics</h3>
+    <div class="sub">Seven levers, applied before generation ever runs — cheaper to filter than to trim after the fact</div>
+    <ul class="strategy-list">
+      <li><b>Metadata filter before vector search.</b> Company / doc-type / date narrows the candidate set before embeddings are even compared — the single biggest lever.</li>
+      <li><b>Prefer structured lookup over RAG.</b> If a question maps to a Postgres field, it never touches the retrieval pipeline at all.</li>
+      <li><b>Tight, topic-coherent chunking.</b> Smaller, cleaner chunks mean fewer low-relevance tokens riding along into context.</li>
+      <li><b>Transcript summarization cascade.</b> Raw call transcripts are summarized once at ingestion, not re-read in full on every query that touches them.</li>
+      <li><b>Model tiering.</b> Cheap/fast models handle classification and extraction; the frontier model is reserved for final synthesis only.</li>
+      <li><b>Prompt caching.</b> Stable system instructions and schemas are cached rather than resent on every call.</li>
+      <li><b>Caching of repeat queries.</b> Common questions (e.g. recurring board-prep queries) reuse recent results instead of re-running the full pipeline.</li>
+    </ul>
+  </div>
+
+  <div class="strategy-section">
+    <h3>Evaluation Strategy</h3>
+    <div class="sub">Structured answers are graded differently than qualitative ones — because they should be</div>
+    <ul class="strategy-list">
+      <li><b>Deterministic evals for structured answers.</b> Exact-match or tolerance-based checks against known-correct financial and legal fields — no ambiguity, so no judge model needed.</li>
+      <li><b>LLM-as-judge for qualitative answers.</b> A grounding rubric scores whether a "what are the risks" style answer is actually supported by the cited sources, not just fluent.</li>
+      <li><b>Retrieval and generation evaluated separately.</b> Bad answers get diagnosed as a retrieval miss vs. a generation/grounding failure — different fixes, so they can't share one metric.</li>
+      <li><b>Eval set grows from real usage.</b> Every real partner question with a verified-correct answer becomes a regression test, not just a one-off.</li>
+    </ul>
+  </div>
+
+  <div class="strategy-section">
+    <h3>Models &amp; Stack</h3>
+    <div class="sub">Right-sized per step, not one model doing everything — the same choices named on the nodes above, laid out flat</div>
+    <table class="mini-table">
+      <tr><th>Layer</th><th>Service</th><th>Choice</th><th>Why</th></tr>
+      <tr><td>Classification / routing</td><td>Argus, Delphi</td><td>Claude Haiku 4.5, structured output</td><td>High volume, low ambiguity — speed and cost matter more than depth</td></tr>
+      <tr><td>Structured extraction</td><td>Argus</td><td>Claude Sonnet 5, JSON mode + Pydantic</td><td>Legal/financial fields need reliability a cheap model won't hold up under</td></tr>
+      <tr><td>Summarization</td><td>Argus</td><td>Claude Haiku 4.5, map-reduce</td><td>Long transcripts, cheap and fast beats deep reasoning here</td></tr>
+      <tr><td>Embeddings</td><td>Argus</td><td>Voyage 4 Large</td><td>Anthropic's recommended embedding partner (Anthropic ships no embedding model of its own); MoE architecture, strong on mixed financial/legal/call-note text</td></tr>
+      <tr><td>Reranking</td><td>Delphi</td><td>Cohere Rerank 4 Fast</td><td>Cross-encoder pass after retrieval — cosine similarity alone isn't precise enough</td></tr>
+      <tr><td>Synthesis / generation</td><td>Delphi</td><td>Claude Sonnet 5, forced citations</td><td>Reasoning over merged structured + retrieved context</td></tr>
+      <tr><td>Groundedness judge</td><td>Delphi</td><td>NLI verifier + Claude Haiku 4.5 rubric</td><td>Cheap enough to run on every answer before it ships</td></tr>
+      <tr><td>Structured store</td><td>Atlas</td><td>Postgres 17 (Supabase-managed)</td><td>Time-series metrics, legal terms, document metadata — relational by nature</td></tr>
+      <tr><td>Vector store</td><td>Atlas</td><td>pgvector, HNSW index</td><td>One database to operate instead of a separate vector DB</td></tr>
+      <tr><td>Object store</td><td>Atlas</td><td>S3, versioned</td><td>Immutable ground truth every citation traces back to</td></tr>
+      <tr><td>Orchestration</td><td>All four</td><td>LangGraph durable pipeline</td><td>Multi-step ingestion and query flows with retries, gates, and human-review branches</td></tr>
+      <tr><td>Interface</td><td>Delphi</td><td>Next.js chat UI + Slack bot</td><td>Meets partners where they already work</td></tr>
+    </table>
+  </div>
+
+  <div class="strategy-section">
+    <h3>Known Challenges</h3>
+    <div class="sub">The honest list — none of these are fully solved on day one</div>
+    <ul class="strategy-list">
+      <li><b>Messy, inconsistent source formats.</b> 30 companies means 30 different ways of writing a board deck or a term sheet — extraction prompts need constant tuning, not a one-time build.</li>
+      <li><b>Access sprawl.</b> Docs live across Drive, email, and DocSend today — normalizing access and permissions across all three is real integration work, not a footnote.</li>
+      <li><b>Confidentiality boundaries.</b> Per-company and per-partner access controls have to be correct from day one — this is fund-sensitive data, not a nice-to-have.</li>
+      <li><b>Transcript noise.</b> Auto-generated transcripts have real error rates; summarization has to be robust to that noise, not assume clean input.</li>
+      <li><b>Staleness.</b> A number that was true last quarter can quietly become wrong — every structured fact needs a visible "as of" date, not just a value.</li>
+    </ul>
+  </div>
+
+  <div class="strategy-section">
+    <h3>Suggested Build Sequence</h3>
+    <div class="sub">Ship the highest-value narrow slice first, expand from there</div>
+    <div class="build-seq">
+      <div class="build-step"><div class="num">1</div><div class="txt"><b>Structured financial pipeline, one company</b><span>Prove ingestion → extraction → Postgres → parametrized query end-to-end on a single well-understood company before scaling out.</span></div></div>
+      <div class="build-step"><div class="num">2</div><div class="txt"><b>Expand structured pipeline to all ~30 companies</b><span>Backfill from Drive, tune extraction across format variance, stand up the confidence gate and review queue for real.</span></div></div>
+      <div class="build-step"><div class="num">3</div><div class="txt"><b>Unstructured / RAG pipeline</b><span>Chunking, embedding, pgvector, hybrid retrieval — layered in once structured answers are trustworthy and in daily use.</span></div></div>
+      <div class="build-step"><div class="num">4</div><div class="txt"><b>Transcript ingestion, live</b><span>Wire up Fireflies' native webhook and Granola's Enterprise API/MCP connector so the knowledge base updates within minutes of a call ending, not on a batch delay.</span></div></div>
+      <div class="build-step"><div class="num">5</div><div class="txt"><b>Eval harness + groundedness gate</b><span>Deterministic evals for structured answers, LLM-judge grounding checks for qualitative ones, before this becomes something partners rely on daily.</span></div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="foot">Aatreyo Shashwat De — Inflexor Portfolio Knowledge Base, architecture spec</footer>
+
+<script>
+(function(){
+  var edges = [
+    {from:'n-upload', to:'n-classifier'},
+    {from:'n-email', to:'n-classifier'},
+    {from:'n-drive', to:'n-classifier'},
+    {from:'n-docsend', to:'n-classifier'},
+    {from:'n-webhook', to:'n-classifier'},
+    {from:'n-classifier', to:'n-fin-extract'},
+    {from:'n-classifier', to:'n-legal-extract'},
+    {from:'n-classifier', to:'n-transcript-sum'},
+    {from:'n-classifier', to:'n-chunk-embed'},
+    {from:'n-classifier', to:'n-objstore', kind:'dashed', label:'archive'},
+    {from:'n-transcript-sum', to:'n-chunk-embed'},
+    {from:'n-fin-extract', to:'n-gate'},
+    {from:'n-legal-extract', to:'n-gate'},
+    {from:'n-gate', to:'n-review', kind:'fail', label:'low confidence'},
+    {from:'n-gate', to:'n-postgres', kind:'pass', label:'validated'},
+    {from:'n-review', to:'n-postgres', label:'corrected'},
+    {from:'n-chunk-embed', to:'n-vector'},
+    {from:'n-postgres', to:'n-param-query', kind:'dashed'},
+    {from:'n-vector', to:'n-retrieval', kind:'dashed'},
+    {from:'n-trigger-q', to:'n-router'},
+    {from:'n-router', to:'n-param-query', label:'structured'},
+    {from:'n-router', to:'n-retrieval', label:'qualitative'},
+    {from:'n-retrieval', to:'n-rerank'},
+    {from:'n-param-query', to:'n-generate'},
+    {from:'n-rerank', to:'n-generate'},
+    {from:'n-generate', to:'n-ground-check'},
+    {from:'n-ground-check', to:'n-dashboard'}
+  ];
+
+  var kindColor = {
+    default: 'rgba(255,255,255,0.28)',
+    pass: 'rgba(34,197,139,0.55)',
+    fail: 'rgba(245,166,35,0.6)',
+    dashed: 'rgba(255,255,255,0.18)'
+  };
+
+  function drawEdges(){
+    var canvas = document.getElementById('canvas');
+    var svg = document.getElementById('edgesSvg');
+    var layer = document.getElementById('edgesLayer');
+    var canvasRect = canvas.getBoundingClientRect();
+    layer.innerHTML = '';
+
+    edges.forEach(function(e){
+      var fromEl = document.getElementById(e.from);
+      var toEl = document.getElementById(e.to);
+      if(!fromEl || !toEl) return;
+      var fr = fromEl.getBoundingClientRect();
+      var tr = toEl.getBoundingClientRect();
+      var fx = fr.left - canvasRect.left, fy = fr.top - canvasRect.top;
+      var tx = tr.left - canvasRect.left, ty = tr.top - canvasRect.top;
+      var fw = fr.width, fh = fr.height, tw = tr.width, th = tr.height;
+      var dx = (tx + tw/2) - (fx + fw/2);
+      var dy = (ty + th/2) - (fy + fh/2);
+      var x1,y1,x2,y2,c1x,c1y,c2x,c2y;
+
+      if (Math.abs(dx) >= Math.abs(dy)){
+        if (tx >= fx){ x1=fx+fw; y1=fy+fh/2; x2=tx; y2=ty+th/2; }
+        else { x1=fx; y1=fy+fh/2; x2=tx+tw; y2=ty+th/2; }
+        var mx=(x1+x2)/2;
+        c1x=mx; c1y=y1; c2x=mx; c2y=y2;
+      } else {
+        if (ty >= fy){ x1=fx+fw/2; y1=fy+fh; x2=tx+tw/2; y2=ty; }
+        else { x1=fx+fw/2; y1=fy; x2=tx+tw/2; y2=ty+th; }
+        var my=(y1+y2)/2;
+        c1x=x1; c1y=my; c2x=x2; c2y=my;
+      }
+
+      var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', 'M '+x1+' '+y1+' C '+c1x+' '+c1y+', '+c2x+' '+c2y+', '+x2+' '+y2);
+      var cls = 'edge' + (e.kind ? ' edge-'+e.kind : '');
+      path.setAttribute('class', cls);
+      path.dataset.from = e.from;
+      path.dataset.to = e.to;
+      layer.appendChild(path);
+
+      if (e.label){
+        var lx=(x1+x2)/2, ly=(y1+y2)/2 - 7;
+        var text = document.createElementNS('http://www.w3.org/2000/svg','text');
+        text.setAttribute('x', lx); text.setAttribute('y', ly);
+        text.setAttribute('class','edge-label');
+        text.textContent = e.label;
+        layer.appendChild(text);
+      }
+    });
+  }
+
+  function setupInteractions(){
+    var nodes = document.querySelectorAll('.node');
+    nodes.forEach(function(node){
+      var id = node.id;
+      function highlight(on){
+        document.querySelectorAll('.edge').forEach(function(edge){
+          if (edge.dataset.from === id || edge.dataset.to === id){
+            edge.classList.toggle('hl', on);
+          }
+        });
+      }
+      node.addEventListener('mouseenter', function(){ highlight(true); });
+      node.addEventListener('mouseleave', function(){ highlight(false); });
+
+      function jump(){
+        var targetSel = node.getAttribute('data-target');
+        var target = targetSel ? document.querySelector(targetSel) : null;
+        if (!target) return;
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        target.classList.add('flash');
+        setTimeout(function(){ target.classList.remove('flash'); }, 1600);
+      }
+      node.addEventListener('click', jump);
+      node.addEventListener('keydown', function(ev){
+        if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); jump(); }
+      });
+    });
+  }
+
+  window.addEventListener('load', function(){
+    drawEdges();
+    setupInteractions();
+  });
+  window.addEventListener('resize', drawEdges);
+})();
+</script>
+
+</body>
+</html>
