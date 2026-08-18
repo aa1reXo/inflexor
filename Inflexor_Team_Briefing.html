@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflexor Team Briefing</title>
+<style>
+:root{
+  --bg:#fbf5ea;
+  --ink:#241a12;
+  --sub:#5c4c3d;
+  --accent:#7a1f2b;
+  --accent-soft:#f3e3e0;
+  --accent2:#8a5a19;
+  --accent2-soft:#f1e6d3;
+  --teal:#12645a;
+  --teal-soft:#dcece9;
+  --line:#e6d9c4;
+  --card:#fffdf8;
+  --section-pad:90px;
+  --block-gap:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px;margin:0 auto;padding-left:28px;padding-right:28px;}
+section{padding:var(--section-pad) 0}
+h1,h2,h3{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;font-weight:600;letter-spacing:-.01em}
+a{color:var(--accent)}
+.eyebrow{
+  text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:700;
+  color:var(--accent2);margin-bottom:10px;display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--accent2)}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(251,245,234,.95);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;flex-wrap:wrap;gap:10px}
+nav .brand{font-weight:700;font-size:.95rem;color:var(--accent)}
+nav .links{display:flex;gap:16px;font-size:.8rem;flex-wrap:wrap}
+nav .links a{color:var(--sub);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent}
+nav .links a.active,nav .links a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* HERO */
+.hero{padding-top:70px;padding-bottom:50px}
+.hero h1{font-size:2.3rem;line-height:1.2;max-width:760px;margin-bottom:20px}
+.hero p.lead{font-size:1.08rem;color:var(--sub);max-width:680px;margin-bottom:14px}
+.hero .note{font-size:.86rem;color:var(--sub);max-width:680px;opacity:.85;background:var(--accent2-soft);border-left:3px solid var(--accent2);padding:14px 18px;border-radius:0 8px 8px 0;margin-top:20px}
+
+/* TOC */
+.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+@media(max-width:700px){.toc{grid-template-columns:1fr 1fr}}
+.toc a{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;text-decoration:none;color:var(--ink);font-size:.88rem;
+}
+.toc a .role{display:block;font-size:.72rem;color:var(--sub);margin-top:3px}
+.toc a:hover{border-color:var(--accent)}
+
+/* PERSON CARD */
+.person{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:36px;margin-bottom:28px;scroll-margin-top:80px;
+}
+.person .phead{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.person h2{font-size:1.6rem}
+.person .role{font-size:.9rem;color:var(--accent2);font-weight:700;margin-top:4px}
+.team-tag{
+  display:inline-block;font-size:.68rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.05em;padding:4px 10px;border-radius:20px;white-space:nowrap;
+}
+.team-tag.invest{background:var(--accent-soft);color:var(--accent)}
+.team-tag.portfolio{background:var(--teal-soft);color:var(--teal)}
+.team-tag.ops{background:var(--accent2-soft);color:var(--accent2)}
+.pblock{margin-top:22px}
+.pblock h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent2);margin-bottom:8px}
+.pblock p{font-size:.96rem;color:var(--ink)}
+.pblock p + p{margin-top:8px}
+.talk{background:var(--bg);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:16px 20px;margin-top:8px}
+.talk p{color:var(--ink)}
+.sources{font-size:.76rem;color:var(--sub);margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+
+footer{border-top:1px solid var(--line);padding:50px 0 40px;text-align:center}
+footer p{font-size:.84rem;color:var(--sub)}
+
+.fade{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Inflexor Team Briefing</div>
+    <div class="links">
+      <a href="#murali">Murali</a>
+      <a href="#minal">Minal</a>
+      <a href="#sandeep">Sandeep</a>
+      <a href="#pratik">Pratik</a>
+      <a href="#harsha">Harsha</a>
+      <a href="#anush">Anush</a>
+      <a href="#venkat">Venkat</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Seven people, seven different doors into the same fund.</h1>
+    <p class="lead">Background, career arc, how each person actually thinks, and where there's real common ground — not generic small talk. Built for individual conversations, not a single pitch, so go straight to whoever you're meeting next.</p>
+    <p class="note">Everything below is sourced from Inflexor's own team pages, public interviews, and their published writing — cited at the end of each profile. Personal-interest details are taken from what they've said publicly, not guessed.</p>
+    <div class="toc">
+      <a href="#murali">Murali Krishna Gunturu<span class="role">Partner</span></a>
+      <a href="#minal">Minal Sequeira<span class="role">Head, Finance &amp; Compliance</span></a>
+      <a href="#sandeep">Sandeep Naidu Kandipalli<span class="role">Head, Strategic Development</span></a>
+      <a href="#pratik">Pratik Ahuja<span class="role">Associate</span></a>
+      <a href="#harsha">Harsha Mundhada<span class="role">Partner</span></a>
+      <a href="#anush">Anush Prem<span class="role">Principal</span></a>
+      <a href="#venkat">Venkat Vallabhaneni<span class="role">Founder &amp; MD</span></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="person fade" id="murali">
+      <div class="phead">
+        <div><h2>Murali Krishna Gunturu</h2><div class="role">Partner</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>Chartered Accountant and CFA charterholder. Started his career in the Assurance department at Ernst &amp; Young, then worked as a virtual CFO for several SMEs — advising on funding and strategic decisions from the inside before ever writing a check himself. A founding member of Inflexor, present since the fund's earliest days.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>Recently elevated to Partner (alongside Harsha Mundhada) after building his track record as one of Inflexor's founding team members. Sits on The Builders Circle's CXO Advisory Panel, personally advising growth-stage founders on fundraising. Leads Inflexor's own fundraising and investor management. Author of the fund's public thinking on SpaceTech (July 2025) and Generative AI (April 2025). Investment team on Awiros, Bellatrix Aerospace, CloudSEK, CredFlow, Entropik, NoPo, PlayShifu, SecureTime, Singularity, Steradian, Terra, and Practically — one of the widest deal benches on the team.</p>
+      </div>
+      <div class="pblock">
+        <h4>How he thinks</h4>
+        <p>Big4-trained rigor paired with real empathy for the founder's side of the table — he's literally sat in the CFO seat for small businesses before moving to the investor seat. Publicly, he says he "takes a deep interest in understanding founders and what makes them tick," which reads less like a numbers-first investor and more like someone who treats psychology as part of the diligence.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> He dances and does theatre, travels for adventure (not just leisure), and keeps up with psychology and macro trends as genuine interests, not resume filler. A good opener: ask what changed in how he reads a founder once he started paying attention to psychology, not just financials — it's a question his own bio invites. On the personal side, dance and theatre are distinctive enough to ask about directly: what kind of dance, how long he's been doing it, or the last production he saw.</p>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Inc42 (Partner elevation); The Builders Club profile, Dec 2024; Inflexor blog (SpaceTech thesis, July 2025; Generative AI, April 2025)</div>
+    </div>
+
+    <div class="person fade" id="minal">
+      <div class="phead">
+        <div><h2>Minal Sequeira</h2><div class="role">Head, Finance and Compliance</div></div>
+        <span class="team-tag ops">Operations Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>B.Com from R.A. Podar College, Mumbai. Triple-qualified: Chartered Accountant, Company Secretary, and Financial Risk Manager — an unusually complete set of financial credentials for a fund operations role. Joined Inflexor in 2024 as Head of Finance and Compliance, responsible for fund administration, compliance, portfolio management, and LP reporting.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>16+ years almost entirely inside private equity and venture capital fund operations — a career built specifically around this niche, not general corporate finance. Started at Tranzmute Capital (Mumbai fund and advisory), then Sabre Partners (Mumbai PE fund), working directly with its CFO on financial reporting and compliance. Spent over half a decade at Elevar Equity's Bangalore office — a notable impact-focused VC fund — as VP of Finance and Compliance, before joining Inflexor.</p>
+      </div>
+      <div class="pblock">
+        <h4>How she thinks</h4>
+        <p>Someone who has now seen fund operations from three distinct institutional angles — an advisory boutique, a traditional PE fund, and an impact-focused VC fund — before landing at a deep-tech fund. That range suggests she thinks about compliance and LP trust as the quiet infrastructure that lets the investment team take real risks up front.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> She reads, cooks and experiments in the kitchen, and plans travel itineraries for friends and family — genuinely warm, low-pressure territory. Ask about a recent trip she's planned or something she's been cooking lately; it's clearly something she enjoys, not just a bio line. Professionally, her years at Elevar Equity — an impact-first fund — are worth asking about directly: what that experience taught her that's different from a pure-returns fund, which ties naturally into Inflexor's own stated interest in societal impact.</p>
+      </div>
+      <div class="sources">Source: Inflexor team page</div>
+    </div>
+
+    <div class="person fade" id="sandeep">
+      <div class="phead">
+        <div><h2>Sandeep Naidu Kandipalli</h2><div class="role">Head, Strategic Development</div></div>
+        <span class="team-tag portfolio">Portfolio Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>B.Tech in Computer Science &amp; Engineering from IIT Madras, followed by an MBA from IIM Ahmedabad — a genuine tech-to-finance arc from the start. Based out of Bangalore. Started in Technology and Derivatives Trading at HSBC, then spent 7 years as an investment banker at JM Financial executing deals across technology, telecom, and industrial sectors.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>Led corporate development at Ola, where he also ran investor relations for Ola Cabs during one of India's highest-profile consumer startup growth phases. Went on to become Head of Corporate Finance at Jupiter Capital, leading portfolio management, fundraising, and strategy for portfolio companies. At Inflexor, he owns growth and exits — arguably the part of the fund's job that's hardest to get public credit for, since it only shows up years later.</p>
+      </div>
+      <div class="pblock">
+        <h4>How he thinks</h4>
+        <p>He's sat on nearly every side of a growth-stage company's table — banker advising the deal, in-house corporate development at a scaled startup, and portfolio value-creation at an investment firm. His job title, "growth and exits," is literally about thinking several steps ahead of where a portfolio company is today.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> Stock markets, sports, puzzles, and poker are all listed as genuine interests — and notably, he teaches Quant and Data Interpretation to CAT and GMAT aspirants in his spare time. That teaching habit is a great, specific opener: ask what got him into it, or what he finds himself explaining most often. Poker is also a strong professional bridge — ask if he sees real parallels between reading a poker table and reading a growth-stage deal; given his background, he's almost certainly thought about this already.</p>
+      </div>
+      <div class="sources">Sources: Inflexor team page; SignalHire (location)</div>
+    </div>
+
+    <div class="person fade" id="pratik">
+      <div class="phead">
+        <div><h2>Pratik Ahuja</h2><div class="role">Associate</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>B.Tech from IIT Indore, MBA from IIM Lucknow. Before Inflexor, he had hands-on hardware and software product experience across Barclays and several startups, investment banking at Avendus, and corporate development at D.E. Shaw &amp; Co. Joined Inflexor in 2024 as a Senior Analyst on the investment team.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>The most junior person on this list by title, but with unusually visible public output for an Associate: co-author of three Inflexor blog posts — "Why We Invested in Morphle Labs" (Jan 2026), the SpaceTech thesis (July 2025, with Murali), and, notably, "The bet with a positive expected value that will bankrupt you" (May 2026) — a genuinely sophisticated piece applying non-ergodicity and the Kelly Criterion to venture fund math. On the investment team for Morphle Labs and Revspot.</p>
+      </div>
+      <div class="pblock">
+        <h4>How he thinks</h4>
+        <p>Describes himself as "a technologist at heart and a business whiz" — and it shows. He's built actual hardware and software products, not just analyzed them from a banking seat, and the ergodicity essay in particular signals someone who reasons about venture math rigorously rather than just narratively.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> Sports — playing, watching, or talking about them — is his stated outside-work interest, a natural bridge if that overlaps with your own. Professionally, the non-ergodicity/Kelly Criterion blog post is the single best specific talking point on this whole list: ask him directly about it. It's rare for an Associate to publish something that technically ambitious, and asking about it signals you actually read his work rather than just his title.</p>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Inflexor blog (Morphle investment thesis, Jan 2026; SpaceTech thesis, July 2025; "The bet with a positive expected value...", May 2026)</div>
+    </div>
+
+    <div class="person fade" id="harsha">
+      <div class="phead">
+        <div><h2>Harsha Mundhada</h2><div class="role">Partner</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>Chartered Accountant (rank holder) and MBA from IIM Ahmedabad (also a rank holder — a dual academic distinction). Spent close to a decade in financial due diligence for M&amp;A transactions across all three Big4 firms — EY, PwC, and Deloitte. Has been with Inflexor since inception, one of the fund's earliest team members.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>Recently elevated to Partner alongside Murali. Holds an unusually broad mandate for one person: investor relations, deal execution, portfolio management, and the legal side of investing all sit with her. Active member of Women in Investing communities in Mumbai. Author or co-author of three Inflexor thought pieces — "The Physical Intelligence Stack" (May 2026), the Atomberg origin story "From Brushless to Boundless" (Sept 2025, with Jatin Desai and Pratip Mazumdar), and "Moving the World: The Future of Global Freight Logistics" (2021). Investment team on A5G Networks, Atomberg, Chakr Innovation, Data Resolve, Kale Logistics, SecureThings, and Verloop.</p>
+      </div>
+      <div class="pblock">
+        <h4>How she thinks</h4>
+        <p>A Big4 due-diligence mind applied across the full deal lifecycle, not just the numbers — she owns legal, portfolio management, and investor relations too, which suggests someone comfortable being the operational backbone of a fund rather than staying in one lane.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> Family time, spirituality, early childhood education, and — most distinctively — collecting handloom sarees from different parts of India. That last one is a genuinely warm, specific opener: ask about a favorite region's weave or a recent addition to the collection. Early childhood education as a stated interest is also worth a gentle question if it connects to anything in your own background — it's clearly a values-driven interest, not incidental.</p>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Inc42 (Partner elevation); Inflexor blog (Physical Intelligence Stack, May 2026; Atomberg origin story, Sept 2025; Freight Logistics, 2021)</div>
+    </div>
+
+    <div class="person fade" id="anush">
+      <div class="phead">
+        <div><h2>Anush Prem</h2><div class="role">Principal</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>B.Tech in Information Technology from the University of Kerala (2004–2008). Based in Bengaluru. Before venture investing, he was a genuine operator: co-founder and CTO of TechPing Internet Solutions (telephony and wireless) and Increed Technologies (data collection and internet portals), plus technology consulting for Direct Blue, a networking equipment reseller.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>Two separate co-founder/CTO stints before moving to the investing side of the table — hands-on product-building credibility that most VCs don't carry. Now a Principal at Inflexor, actively involved in sourcing and evaluating deep-tech deals.</p>
+      </div>
+      <div class="pblock">
+        <h4>How he thinks</h4>
+        <p>A former founder-CTO now evaluating founders — someone who has actually built and scaled products before switching sides, which tends to show up as low patience for pure-narrative pitches and real interest in what's actually been shipped.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> He's a passionate photographer and a trained mixed martial arts enthusiast — both distinctive, specific hobbies worth asking about directly rather than in passing. Ask what he shoots, or what got him into MMA training and how long he's kept it up. Professionally, his own path from Kerala-trained engineer to two-time CTO to investor is worth acknowledging directly — it's a real journey, not just a title change.</p>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Indian Startup Times interview; ZoomInfo</div>
+    </div>
+
+    <div class="person fade" id="venkat">
+      <div class="phead">
+        <div><h2>Venkat Vallabhaneni</h2><div class="role">Founder &amp; Managing Director</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pblock">
+        <h4>Background</h4>
+        <p>Bachelor's degree from Manipal Institute of Technology (1987); Master's in Computer Science from the New Jersey Institute of Technology (1990). Roughly two decades of his career were spent in the US, with 7+ years back in India before and during Inflexor's founding.</p>
+      </div>
+      <div class="pblock">
+        <h4>Achievements</h4>
+        <p>CEO of Capgemini Technology Services India (2003–2005); Managing Director at Kanbay, Inc.; Senior Vice President at Bank of America NA in Hyderabad (2007–2013), where he built out large-scale technology and operations capability. Founder of Accurum, Inc. and Parampara Capital &amp; Management Consultants. Co-founded Inflexor Ventures in 2019 alongside Jatin Desai and Pratip Mazumdar, and has served as Founder &amp; Managing Director since.</p>
+      </div>
+      <div class="pblock">
+        <h4>How he thinks</h4>
+        <p>A serial technology executive who ran large operations — a major bank's India technology function, a large IT services arm — before becoming an investor. His public writing (on Physical AI, autonomous agents, and where enterprise software is structurally headed) shows someone actively thinking several years ahead, not just deal by deal.</p>
+      </div>
+      <div class="talk">
+        <p><b>Common ground &amp; talking points:</b> No specific personal hobbies turned up in public research, worth noting honestly rather than guessing at one. The stronger ground here is professional: his own published thinking on where AI and enterprise software are headed, and his path from running large technology organizations in the US and India to founding a fund from scratch. Asking what from running a 25-year technology career actually changes about how he reads an early-stage team is a real, specific question — not small talk.</p>
+      </div>
+      <div class="sources">Sources: Inflexor team page; LinkedIn; MarketScreener; India GameChanger podcast, Ep. 07 (2022)</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Compiled for Aatreyo — sourced from Inflexor's own public team pages, interviews, and published writing. Personal-interest details reflect what each person has said publicly; nothing here is guessed.</p>
+  </div>
+</footer>
+
+<script>
+const navLinks = document.querySelectorAll('nav .links a');
+const people = document.querySelectorAll('.person[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  people.forEach(p => {
+    const top = p.offsetTop - 100;
+    if (window.scrollY >= top) current = p.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
