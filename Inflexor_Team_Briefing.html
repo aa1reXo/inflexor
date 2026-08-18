@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflexor Team Briefing</title>
+<style>
+:root{
+  --bg:#fbf5ea; --ink:#241a12; --sub:#5c4c3d;
+  --accent:#7a1f2b; --accent-soft:#f3e3e0;
+  --accent2:#8a5a19; --accent2-soft:#f1e6d3;
+  --teal:#12645a; --teal-soft:#dcece9;
+  --line:#e6d9c4; --card:#fffdf8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1080px;margin:0 auto;padding-left:26px;padding-right:26px;}
+section{padding:54px 0}
+h1,h2,h3{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;font-weight:600;letter-spacing:-.01em}
+a{color:var(--accent)}
+ul{list-style:none}
+li{position:relative;padding-left:16px;margin-bottom:6px;font-size:.91rem}
+li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.68rem;font-weight:700;color:var(--accent2);margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--accent2)}
+nav{position:sticky;top:0;z-index:50;background:rgba(251,245,234,.97);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:11px;padding-bottom:11px;flex-wrap:wrap;gap:8px}
+nav .brand{font-weight:700;font-size:.9rem;color:var(--accent)}
+nav .links{display:flex;gap:12px;font-size:.74rem;flex-wrap:wrap}
+nav .links a{color:var(--sub);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent}
+nav .links a:hover{color:var(--accent);border-color:var(--accent)}
+.hero{padding-top:50px;padding-bottom:30px}
+.hero h1{font-size:2rem;line-height:1.2;max-width:800px;margin-bottom:14px}
+.hero p.lead{font-size:1rem;color:var(--sub);max-width:720px;margin-bottom:10px}
+.hero .note{font-size:.82rem;color:var(--sub);max-width:720px;opacity:.9;background:var(--accent2-soft);border-left:3px solid var(--accent2);padding:12px 16px;border-radius:0 8px 8px 0;margin-top:12px}
+.toc{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:22px}
+@media(max-width:820px){.toc{grid-template-columns:1fr 1fr 1fr}}
+.toc a{display:block;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:.78rem;}
+.toc a .role{display:block;font-size:.66rem;color:var(--sub);margin-top:2px}
+.toc a:hover{border-color:var(--accent)}
+.shead{margin-bottom:16px}
+.shead h2{font-size:1.5rem;margin-bottom:6px}
+.shead p{color:var(--sub);font-size:.9rem}
+.person{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-bottom:18px;scroll-margin-top:60px;}
+.person .phead{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.person h2{font-size:1.3rem}
+.person .role{font-size:.82rem;color:var(--accent2);font-weight:700;margin-top:2px}
+.team-tag{display:inline-block;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.team-tag.invest{background:var(--accent-soft);color:var(--accent)}
+.team-tag.portfolio{background:var(--teal-soft);color:var(--teal)}
+.team-tag.ops{background:var(--accent2-soft);color:var(--accent2)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px}
+@media(max-width:760px){.pgrid{grid-template-columns:1fr}}
+.pblock h4{font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent2);margin-bottom:7px;border-bottom:1px dashed var(--line);padding-bottom:5px}
+.talk{background:var(--bg);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:11px 15px;margin-top:2px}
+.talk li::before{color:var(--teal)}
+.qablock{margin-top:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.qablock .qq{font-weight:700;color:var(--accent);font-size:.88rem;margin-bottom:8px}
+.qablock .sub{font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);margin:8px 0 4px}
+.qablock .ask li::before{color:var(--teal)}
+.sources{font-size:.7rem;color:var(--sub);margin-top:12px;padding-top:9px;border-top:1px dashed var(--line)}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:16px}
+.paper .ptitle{font-size:1.08rem;font-weight:700;margin-bottom:2px}
+.paper .pmeta{font-size:.75rem;color:var(--sub);margin-bottom:12px}
+.paper .conf{display:inline-block;font-size:.62rem;font-weight:800;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:8px}
+.conf.full{background:var(--teal-soft);color:var(--teal)}
+.conf.partial{background:var(--accent2-soft);color:var(--accent2)}
+.paper .sub{font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);margin:12px 0 6px}
+.qa{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-bottom:14px}
+.qa .q{font-size:.98rem;font-weight:700;color:var(--accent);margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.glos{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.glos .term{font-weight:700;color:var(--accent2);font-size:.88rem;margin-bottom:4px}
+.glos p{font-size:.86rem;color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:36px 0 30px;text-align:center}
+footer p{font-size:.8rem;color:var(--sub)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Inflexor Team Briefing</div>
+    <div class="links">
+      <a href="#murali">Murali</a><a href="#minal">Minal</a><a href="#sandeep">Sandeep</a><a href="#pratik">Pratik</a>
+      <a href="#harsha">Harsha</a><a href="#anush">Anush</a><a href="#venkat">Venkat</a>
+      <a href="#general">Fund Q&amp;A</a><a href="#glossary">VC 101</a><a href="#papers">Their Papers</a><a href="#myanswers">My Answers</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Seven people, seven doors — full depth, still quick to scan.</h1>
+    <p class="lead">Nothing trimmed. Per person: background, achievements, how they think, common ground, likely questions with your best response, and questions you can ask back that show real curiosity. Then: a bigger general Q&amp;A on the fund, a VC-101 refresher on basic terms, a much deeper digest of what each person has actually published, and an expanded set of your own prepared answers.</p>
+    <p class="note">Sourced from Inflexor's own team pages, public interviews, and full-text reads of their published writing (several re-verified directly on their site after an initial fetch came back incomplete). Anything I couldn't verify is labeled, not guessed.</p>
+    <div class="toc">
+      <a href="#murali">Murali Krishna Gunturu<span class="role">Partner</span></a>
+      <a href="#minal">Minal Sequeira<span class="role">Head, Finance &amp; Compliance</span></a>
+      <a href="#sandeep">Sandeep Naidu K.<span class="role">Head, Strategic Dev.</span></a>
+      <a href="#pratik">Pratik Ahuja<span class="role">Associate</span></a>
+      <a href="#harsha">Harsha Mundhada<span class="role">Partner</span></a>
+      <a href="#anush">Anush Prem<span class="role">Principal</span></a>
+      <a href="#venkat">Venkat Vallabhaneni<span class="role">Founder &amp; MD</span></a>
+      <a href="#general">General Fund Q&amp;A</a>
+      <a href="#glossary">VC 101 Glossary</a>
+      <a href="#papers">Their Papers — Deep Dive</a>
+      <a href="#myanswers">My Answers, Prepared</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="person" id="murali">
+      <div class="phead">
+        <div><h2>Murali Krishna Gunturu</h2><div class="role">Partner</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>Chartered Accountant and CFA charterholder — a combination that pairs audit-grade financial rigor with investment-analysis training</li>
+          <li>Career started in Ernst &amp; Young's Assurance department</li>
+          <li>Worked as a virtual CFO for several SMEs before Inflexor — advised on funding and strategic decisions from inside a business, not just from a fund's side of the table</li>
+          <li>A founding member of Inflexor Ventures — present since the fund's earliest days, not a later hire</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>Started as Principal, recently elevated to Partner alongside Harsha Mundhada — a real, publicly reported promotion (Inc42), not an assumed title</li>
+          <li>Serves on The Builders Circle's CXO Advisory Panel, personally advising growth-stage founders on fundraising as part of a "band of brothers" advisor network</li>
+          <li>Leads Inflexor's own fundraising and investor management — i.e., he's the one raising the fund, not just deploying it</li>
+          <li>Published insights: SpaceTech thesis "Beyond the Kármán Line" (Jul 2025), "Prompting the Future: Generative AI" (Apr 2025, co-authored with Venkat, Anush &amp; Aishwarya Kulkarni), plus three older pieces — "The A→∞ of India's Space Journey" (Nov 2021), "Demystifying: Low-code &amp; No-code" (Aug 2021), "Shifting Dynamics of Venture Funding" (Jun 2021)</li>
+          <li>Widest deal bench on the team: Awiros, Bellatrix Aerospace, CloudSEK, CredFlow, Entropik, NoPo, PlayShifu, SecureTime, Singularity, Steradian Semiconductors, Terra, Practically</li>
+        </ul></div>
+        <div class="pblock"><h4>How he thinks</h4><ul>
+          <li>Big4-trained rigor combined with genuine founder-side empathy — he's literally sat in the CFO chair for small businesses, not just audited them from outside</li>
+          <li>Says he "takes a deep interest in understanding founders and what makes them tick" — treats psychology as a real diligence input, not just financial modeling</li>
+          <li>His own writing (SpaceTech, GenAI) shows someone who builds full frameworks before investing — not just pattern-matching on hype</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>Dances and does theatre — ask what kind of dance, or the last production he was in or saw</li>
+          <li>Travels specifically for adventure, not just leisure — ask about the most recent trip</li>
+          <li>Genuinely into psychology and macro-economic trends, not resume filler</li>
+          <li>Good opener: what changed in how he reads a founder once he started paying attention to psychology, not just financials</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "What have you learned about yourself building these tools that you didn't expect?"</div>
+        <ul><li>Best response: be specific and honest — e.g., that researching each partner's own writing forced you to actually think in their frameworks (S.E.T., Team/TAM/Technology) rather than just building generic AI demos; that's a real, verifiable answer since it's literally what happened across four rounds of prep.</li></ul>
+        <div class="sub">Ask him back</div>
+        <div class="ask"><ul><li>"You've said you pay attention to founder psychology as much as financials — has that ever led you to back someone the data alone wouldn't have supported?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "Where do you think GenAI hype and substance actually diverge right now?"</div>
+        <ul><li>Best response: reference his own piece's framing — AI-native vs. AI-enabled vs. infrastructure-enabler categories, and the "last-mile 20%" idea (going from 80% generic accuracy to real differentiation requires proprietary data, not just a bigger model). Say hype is anything claiming a wrapper alone is a moat; substance is teams solving the last 20% with real domain data.</li></ul>
+        <div class="sub">Ask him back</div>
+        <div class="ask"><ul><li>"Your GenAI piece talks about proprietary data as the real moat — for a fund's own internal tools, is Inflexor's deal history itself a data asset you'd want an AI system to learn from?"</li></ul></div>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Inc42 (Partner elevation); The Builders Club profile, Dec 2024; Inflexor blog (full-text reads)</div>
+    </div>
+
+    <div class="person" id="minal">
+      <div class="phead">
+        <div><h2>Minal Sequeira</h2><div class="role">Head, Finance and Compliance</div></div>
+        <span class="team-tag ops">Operations Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>B.Com, R.A. Podar College, Mumbai</li>
+          <li>Triple-qualified: Chartered Accountant, Company Secretary, and Financial Risk Manager (FRM — a globally recognized GARP credential) — an unusually complete financial-operations credential set</li>
+          <li>Joined Inflexor in 2024 as Head, Finance and Compliance</li>
+          <li>Owns fund administration, compliance, portfolio management, and LP (limited partner) management &amp; reporting</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>16+ years almost entirely inside private equity and venture capital fund operations — a career built specifically around this niche, not general corporate finance</li>
+          <li>Started at Tranzmute Capital, a Mumbai fund and advisory firm, supporting high-potential growth businesses strategically and operationally</li>
+          <li>Moved to Sabre Partners, a Mumbai PE fund, working directly with its CFO on financial reporting, fund administration, and compliance</li>
+          <li>Spent over half a decade at Elevar Equity's Bangalore office — a notable impact-focused venture fund — as VP, Finance and Compliance, overseeing fund operations and compliance</li>
+          <li>Co-authored "Why We Picked GIFT City" (Jun 2026) with Nirpam Agarwal — a detailed, structurally rigorous piece on choosing Inflexor's newest fund's offshore domicile</li>
+        </ul></div>
+        <div class="pblock"><h4>How she thinks</h4><ul>
+          <li>Has seen fund operations from three distinct institutional angles — an advisory boutique, a traditional PE fund, and an impact-focused VC fund — before landing at a deep-tech fund</li>
+          <li>Her GIFT City piece explicitly favors "economic substance over pure tax optimization" — she's process-and-integrity minded, not just cost-minded</li>
+          <li>Treats compliance/LP trust as the quiet infrastructure that lets the investment team take real risk up front</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>Reads, cooks and experiments in the kitchen</li>
+          <li>Designs travel itineraries for friends and family — ask about a recent trip she's planned</li>
+          <li>Worth asking directly: what Elevar Equity's impact-first approach taught her that's different from a pure-returns fund</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "How would an AI tool actually get audited or trusted by compliance-minded LPs?"</div>
+        <ul><li>Best response: every output needs a citation back to a source document or public record (the same discipline used across your own demo work), a human sign-off step before anything reaches an LP, and a stated confidence level rather than a flat answer — auditability is a design constraint, not an afterthought.</li></ul>
+        <div class="sub">Ask her back</div>
+        <div class="ask"><ul><li>"Your GIFT City piece is refreshingly candid about friction, not just upside — was there a point in that decision where the 'boring' operational risk almost outweighed the strategic case?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "What's the messiest, most manual process you think could actually be automated safely?"</div>
+        <ul><li>Best response: don't guess at her actual workflows — instead, name the category (LP reporting, portfolio data aggregation across multiple companies) and ask what she'd trust an AI tool with first, showing you understand the sensitivity involved rather than assuming everything should be automated.</li></ul>
+      </div>
+      <div class="sources">Source: Inflexor team page; Inflexor blog (GIFT City, full-text read)</div>
+    </div>
+
+    <div class="person" id="sandeep">
+      <div class="phead">
+        <div><h2>Sandeep Naidu Kandipalli</h2><div class="role">Head, Strategic Development</div></div>
+        <span class="team-tag portfolio">Portfolio Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>B.Tech, Computer Science &amp; Engineering, IIT Madras</li>
+          <li>MBA, IIM Ahmedabad</li>
+          <li>Based in Bangalore</li>
+          <li>Started in Technology and Derivatives Trading at HSBC — an unusual hybrid of tech and trading-desk exposure early on</li>
+          <li>Spent 7 years as an Investment Banker at JM Financial, executing deals across technology, telecom, and industrial sectors</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>Led corporate development at Ola; also ran investor relations for Ola Cabs during one of India's highest-profile consumer-startup growth phases</li>
+          <li>Became Head of Corporate Finance at Jupiter Capital — led portfolio management, fundraising, and strategy for portfolio companies to drive value creation</li>
+          <li>At Inflexor: owns growth and exits — 15+ years spanning technology, corporate development, investment banking, and investor relations feed directly into this mandate</li>
+          <li>No public investment-team deal tags yet on Inflexor's portfolio pages (his role is structural/strategic rather than deal-sourcing)</li>
+        </ul></div>
+        <div class="pblock"><h4>How he thinks</h4><ul>
+          <li>Has sat on nearly every side of a growth-stage company's table — banker advising the deal, in-house corporate development at a scaled startup, portfolio value-creation at an investment firm</li>
+          <li>His job title itself, "growth and exits," means thinking several steps past where a portfolio company is today — the least visible, most delayed-payoff job on the team</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>Stock markets, sports, puzzles, and poker as genuine stated interests</li>
+          <li>Teaches Quant and Data Interpretation to CAT/GMAT aspirants in his spare time — ask what got him into teaching, or what he finds himself repeating most often to students</li>
+          <li>Poker → deal-reading is a natural professional bridge; given his background, he's almost certainly thought about the parallel already</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "How would you use AI to think about exit timing or growth strategy, not just sourcing/triage?"</div>
+        <ul><li>Best response: frame it as a "Portfolio Pulse"-style agent that doesn't just report hiring/press signals but flags when a company's growth trajectory or comparable-exit landscape shifts enough to warrant a strategic conversation — the goal is surfacing the right moment for a human decision, not making the call.</li></ul>
+        <div class="sub">Ask him back</div>
+        <div class="ask"><ul><li>"You've been on the founder-facing side of an exit (Ola) and the fund side — does that change how early you personally start thinking about a company's eventual exit path?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "How do you think about probability and hidden information when evaluating an early bet?"</div>
+        <ul><li>Best response: draw the poker analogy directly — position sizing under incomplete information, reading a small number of informative signals rather than waiting for full certainty, and knowing when the expected value justifies the bet even if any single outcome is unknowable. It shows you'll meet him on his own terms rather than giving a generic "diligence" answer.</li></ul>
+      </div>
+      <div class="sources">Sources: Inflexor team page; SignalHire</div>
+    </div>
+
+    <div class="person" id="pratik">
+      <div class="phead">
+        <div><h2>Pratik Ahuja</h2><div class="role">Associate</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>B.Tech, IIT Indore</li>
+          <li>MBA, IIM Lucknow</li>
+          <li>Hardware and software product experience across Barclays and several startups</li>
+          <li>Investment banking at Avendus; corporate development at D.E. Shaw &amp; Co.</li>
+          <li>Joined Inflexor in 2024 as a Senior Analyst on the investment team (bio uses "Senior Analyst"; team page lists "Associate" — same role, two labels)</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>Most junior title on this list, but unusually visible public output for that level</li>
+          <li>Co-authored "Why We Invested in Morphle Labs" (Jan 2026, with Pratip Mazumdar &amp; Anush Prem)</li>
+          <li>Co-authored the SpaceTech thesis (Jul 2025, with Murali)</li>
+          <li>Authored "The Bet With a Positive Expected Value That Will Bankrupt You" (May 2026) — a genuinely sophisticated non-ergodicity/Kelly Criterion essay</li>
+          <li>On the investment team for Morphle Labs and Revspot</li>
+        </ul></div>
+        <div class="pblock"><h4>How he thinks</h4><ul>
+          <li>Self-described "technologist at heart and a business whiz"</li>
+          <li>Has built actual hardware and software products, not just analyzed them from a banking seat</li>
+          <li>The ergodicity essay signals someone who reasons about venture math rigorously and quantitatively, not just narratively — a rare trait to see published this early in a career</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>Sports — playing, watching, or talking about them, per his own bio</li>
+          <li>Best specific opener on this whole list: ask directly about the non-ergodicity/Kelly Criterion post</li>
+          <li>Rare for an Associate to publish something that technically ambitious — noticing it signals you read his actual work, not just his title</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "Have you thought about how non-ergodicity applies to your own career bet in taking this role?"</div>
+        <ul><li>Best response: yes, directly — a role like this is maximally non-ergodic for you personally (one path, no averaging across alternatives, per his own essay's framing of the founder's position) — and that you're deliberately choosing the "higher-variance, higher-upside" path rather than a safer, more conventional engineering track, which is itself consistent with the fund's own worldview.</li></ul>
+        <div class="sub">Ask him back</div>
+        <div class="ask"><ul><li>"Your ergodicity piece says most GPs make follow-on decisions on gut and relationship rather than a rigorous framework — have you seen that framework actually change a real follow-on call here, or is it more of a useful mental model so far?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "How would you use AI to actually find deals, not just evaluate the ones that land on our desk?"</div>
+        <ul><li>Best response: describe a sourcing-facing agent that scans public signals (funding announcements, patent filings, research-to-product transitions, hiring patterns at target companies) to surface deals before they're shopped around — complementary to, not competing with, his own personal network-based sourcing.</li></ul>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Inflexor blog (all three pieces, full-text read)</div>
+    </div>
+
+    <div class="person" id="harsha">
+      <div class="phead">
+        <div><h2>Harsha Mundhada</h2><div class="role">Partner</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>Chartered Accountant — rank holder</li>
+          <li>MBA, IIM Ahmedabad — also a rank holder (a dual academic distinction, not common)</li>
+          <li>~10 years in financial due diligence for M&amp;A transactions across all three Big4 firms — EY, PwC, and Deloitte</li>
+          <li>With Inflexor since inception — one of the fund's earliest team members</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>Recently elevated to Partner alongside Murali Krishna Gunturu</li>
+          <li>Holds an unusually broad mandate for one person: investor relations, deal execution, portfolio management, AND the legal side of investing</li>
+          <li>Active member of Women in Investing communities in Mumbai</li>
+          <li>Co-authored "The Physical Intelligence Stack: Architecture for the Modern Economy" (May 2026, with Anush Prem &amp; Aishwarya Kulkarni) — Inflexor's Industrial-AI thesis</li>
+          <li>Co-authored the Atomberg origin story "From Brushless to Boundless" (Sept 2025, with Jatin Desai &amp; Pratip Mazumdar)</li>
+          <li>Co-authored "Moving the World: The Future of Global Freight Logistics" (2021, with Pratip Mazumdar)</li>
+          <li>Investment team on A5G Networks, Atomberg, Chakr Innovation, Data Resolve, Kale Logistics, SecureThings, Verloop</li>
+        </ul></div>
+        <div class="pblock"><h4>How she thinks</h4><ul>
+          <li>A Big4 due-diligence mind applied across the full deal lifecycle, not just the numbers — she owns legal, portfolio management, and investor relations too</li>
+          <li>The Physical Intelligence Stack piece she co-authored is unusually structured — five clear investment criteria (data-moat trajectory, deployment reality, commercial architecture, stack positioning/defensibility, technology-vs-product discipline) — suggesting she thinks in evaluable checklists, not vibes</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>Family time, spirituality, early childhood education</li>
+          <li>Collects handloom sarees from different parts of India — ask about a favorite region's weave or a recent addition to the collection</li>
+          <li>Early childhood education as a stated interest is worth a gentle question if it connects to anything in your own background</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "How do you think about where a human absolutely must stay in the loop versus where automation is safe?"</div>
+        <ul><li>Best response: point to her own piece's "Deployment Reality" criterion — the gap between a tool that sells well and one that actually deploys safely in production is exactly where humans need to stay in the loop; anything customer-facing or capital-committing should have a human gate, anything purely informational (monitoring, first-pass reads) can run autonomously.</li></ul>
+        <div class="sub">Ask her back</div>
+        <div class="ask"><ul><li>"Your Physical Intelligence Stack piece talks about 'deployment reality' — sales success versus real production deployment — have you seen that gap trip up a company you otherwise liked on paper?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "What do you think a 'boring' company nobody's paying attention to yet might look like today?"</div>
+        <ul><li>Best response: use the Atomberg pattern she co-wrote about directly — an unglamorous, overlooked category (ceiling fans) with a real, defensible technical moat underneath, chosen for founder-VC fit over a bigger name. Say you'd look for the same shape today: unsexy category, real IP, founders who've already pivoted once and absorbed the lesson.</li></ul>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Inc42; Inflexor blog (all three pieces, full-text read)</div>
+    </div>
+
+    <div class="person" id="anush">
+      <div class="phead">
+        <div><h2>Anush Prem</h2><div class="role">Principal</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>B.Tech, Information Technology, University of Kerala (2004–2008)</li>
+          <li>Based in Bengaluru</li>
+          <li>Co-founder &amp; CTO, TechPing Internet Solutions (telephony and wireless)</li>
+          <li>Co-founder &amp; CTO, Increed Technologies (data collection and internet portals)</li>
+          <li>Technology consulting for Direct Blue, a networking equipment reseller</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>Two separate co-founder/CTO stints before switching to the investing side — real, hands-on product-building credibility most VCs don't carry</li>
+          <li>Now a Principal at Inflexor, active in sourcing and evaluating deep-tech deals</li>
+          <li>Co-authored three of the fund's biggest recent theses: the Morphle investment write-up (Jan 2026), the Physical Intelligence Stack piece (May 2026), and the Generative AI thesis (Apr 2025) — a striking pattern of being on nearly every major published piece regardless of sector, suggesting a generalist role across the investment team's public output</li>
+        </ul></div>
+        <div class="pblock"><h4>How he thinks</h4><ul>
+          <li>A former founder-CTO now evaluating founders — tends to show up as low patience for pure-narrative pitches and real interest in what's actually been shipped</li>
+          <li>Appearing across space-tech-adjacent healthcare hardware (Morphle), industrial AI (Physical Intelligence Stack), and consumer/enterprise GenAI (Prompting the Future) suggests breadth rather than a single sector obsession</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>Passionate photographer — ask what he shoots</li>
+          <li>Trained mixed martial arts enthusiast — ask what got him into it and how long he's trained</li>
+          <li>His own path — Kerala-trained engineer → two-time CTO → investor — is worth acknowledging directly, not glossing over</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "What's the biggest thing you got wrong evaluating your own work that changed how you evaluate others' now?"</div>
+        <ul><li>Best response: this is a personal question about him, not you — the "best response" here is really a good follow-up, not an answer: listen for what he says, and be ready to relate it briefly to your own experience of iterating on the four interview-prep pages, where feedback repeatedly forced you to cut a "good enough" first draft.</li></ul>
+        <div class="sub">Ask him back</div>
+        <div class="ask"><ul><li>"You've been on three different published theses this year across three different sectors — is that a deliberate generalist role, or does it just reflect where the deals happened to land?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "Walk me through the Deal Triage Copilot you built — what happens when the model is confidently wrong?"</div>
+        <ul><li>Best response: be concrete — every score comes with a stated source and a confidence signal, nothing auto-approves a deal, and a wrong-but-confident output is caught by the same human review step that would catch a wrong-but-uncertain one; the design goal is making the human's first hour start at judgment, not preventing every possible model error.</li></ul>
+      </div>
+      <div class="sources">Sources: Inflexor team page; Indian Startup Times interview; Inflexor blog (all three pieces, full-text read)</div>
+    </div>
+
+    <div class="person" id="venkat">
+      <div class="phead">
+        <div><h2>Venkat Vallabhaneni</h2><div class="role">Founder &amp; Managing Director</div></div>
+        <span class="team-tag invest">Investment Team</span>
+      </div>
+      <div class="pgrid">
+        <div class="pblock"><h4>Background</h4><ul>
+          <li>Bachelor's degree, Manipal Institute of Technology (1987)</li>
+          <li>Master's in Computer Science, New Jersey Institute of Technology (1990)</li>
+          <li>~20 years in the US, 7+ years in India before and during Inflexor's founding</li>
+        </ul></div>
+        <div class="pblock"><h4>Achievements</h4><ul>
+          <li>CEO, Capgemini Technology Services India (2003–2005)</li>
+          <li>Managing Director, Kanbay, Inc.</li>
+          <li>SVP, Bank of America NA, Hyderabad (2007–2013) — built out large-scale India technology and operations capability</li>
+          <li>Founder, Accurum, Inc. and Parampara Capital &amp; Management Consultants</li>
+          <li>Co-founded Inflexor Ventures in 2019 with Jatin Desai &amp; Pratip Mazumdar; Founder &amp; Managing Director since</li>
+          <li>Co-authored "Prompting the Future: Generative AI" (Apr 2025, with Murali, Anush &amp; Aishwarya Kulkarni)</li>
+          <li>Authored "The Great Software Reckoning: From Digital SaaS to Physical AI" (Feb 2026) — coined "Death of the Seat" and "Rise of the Autonomous Outcome," and framed the shift from "Human-in-the-loop" to "Manager-in-the-loop" as software agents take on more autonomous work</li>
+        </ul></div>
+        <div class="pblock"><h4>How he thinks</h4><ul>
+          <li>Serial technology executive who ran large operations — a major bank's India technology function, a large IT services arm — before becoming an investor</li>
+          <li>His public writing (Physical AI, autonomous agents, "Death of the Seat") shows someone actively thinking several years ahead structurally, not just deal by deal</li>
+          <li>The "Manager-in-the-loop" framing suggests he sees the AI Engineer role itself evolving toward overseeing autonomous systems rather than approving every individual output — worth keeping in mind for how he might frame this actual job</li>
+        </ul></div>
+        <div class="pblock"><h4>Common ground &amp; talking points</h4><div class="talk"><ul>
+          <li>No personal hobbies surfaced publicly — worth being honest about rather than guessing at one</li>
+          <li>Stronger ground: his own published thinking on where AI and enterprise software are headed structurally</li>
+          <li>His 25-year run building large tech organizations in the US and India before founding a fund from scratch</li>
+        </ul></div></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "Where do you think the AI Engineer role itself is headed in 3–5 years?"</div>
+        <ul><li>Best response: use his own "Manager-in-the-loop" framing — the role likely shifts from building and personally approving every output to designing and overseeing systems that operate more autonomously, with the human's job becoming exception-handling and judgment calls rather than routine review.</li></ul>
+        <div class="sub">Ask him back</div>
+        <div class="ask"><ul><li>"You coined 'Death of the Seat' for enterprise software broadly — does that same logic eventually apply to roles inside a venture fund itself, including this one?"</li></ul></div>
+      </div>
+      <div class="qablock">
+        <div class="qq">Q: "What's the difference between a copilot and an agent, and when does one graduate into the other?"</div>
+        <ul><li>Best response: a copilot requires a human to approve every action before it takes effect (like the Deal Triage tool); an agent runs on its own schedule and only surfaces exceptions (like the Portfolio Pulse tool). The graduation point is trust built through a track record of accurate, well-sourced copilot outputs — not a fixed timeline.</li></ul>
+      </div>
+      <div class="sources">Sources: Inflexor team page; LinkedIn; MarketScreener; India GameChanger podcast Ep. 07 (2022); "The Great Software Reckoning" (Feb 2026); Inflexor blog (GenAI piece, full-text read)</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="general">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">Beyond Individuals</div>
+      <h2>General Questions to Expect About Inflexor &amp; Its Investments</h2>
+      <p>Questions any of the seven could reasonably ask, not tied to one person's background.</p>
+    </div>
+    <div class="grid2">
+      <div class="qa"><div class="q">"What do you know about our investment philosophy?"</div><ul>
+        <li>S.E.T. — Science, Engineering, Technology-led — is the fund's public framework, first written up fully by Jatin (Apr 2026)</li>
+        <li>Team / TAM / Technology scoring underneath it, applied to every deal</li>
+        <li>Jatin's "Founding Trinity": Scientist (IP anchor), Engineer (executioner), Business Strategist (navigator) — usually distributed across 2–4 founders, rarely one person</li>
+        <li>Founder red flags they explicitly watch for: Academic Inertia (great science, no market), Tourist Founders (chasing the trend without depth), Lone Wolves (solo founder lacking range)</li>
+      </ul></div>
+      <div class="qa"><div class="q">"Which portfolio company do you find most interesting, and why?"</div><ul>
+        <li>Atomberg — the flagship power-law story, first institutional check at Seed (2016)</li>
+        <li>Bellatrix Aerospace — indigenous Hall-effect thrusters, real space-hardware IP</li>
+        <li>Morphle Labs — robotic histopathology (RoboTome®, MorphoLens), solving a real infrastructure shortage of trained histo-technologists</li>
+        <li>BioPrime Agrisolutions — climate-resilient agribiologicals, ties directly to the fund's stated societal-impact framing</li>
+      </ul></div>
+      <div class="qa"><div class="q">"What's your view on India's deep-tech investing climate right now?"</div><ul>
+        <li>Fund III: ₹400 Cr first close toward a ₹1,250 Cr target (Aug 2026) — real momentum, not a coasting fund</li>
+        <li>India's space economy alone: ~$8.4B today, projected ~$44B by 2033 (per Murali's SpaceTech thesis)</li>
+        <li>Policy tailwinds: IN-SPACe, NSIL, 100% FDI in space under the automatic route</li>
+        <li>GIFT City domicile choice for the newest fund signals building for global LPs, not just domestic ones</li>
+        <li>India registers the highest Industrial IoT CAGR among major economies; AI-in-manufacturing growing ~59% CAGR through 2028 (per the Physical Intelligence Stack piece)</li>
+      </ul></div>
+      <div class="qa"><div class="q">"What would you build in your first 30/60/90 days?"</div><ul>
+        <li>Month 1: Deal Triage Copilot — structured first read on new deals against the fund's own S.E.T./Team-TAM-Technology framework</li>
+        <li>Month 2: Portfolio Pulse Agent — scheduled monitoring across the whole portfolio</li>
+        <li>Month 3: Founder &amp; IC Briefing Copilot — combines both into one pre-meeting one-pager</li>
+      </ul></div>
+      <div class="qa"><div class="q">"How is Inflexor different from a generalist VC fund?"</div><ul>
+        <li>Deliberately narrow: Science/Engineering/Technology-led companies with real IP, not sector-agnostic software</li>
+        <li>Small, high-conviction pace — 22–25 companies per fund vintage, not a spray-and-pray portfolio</li>
+        <li>Does real technical IP diligence — "we even look at their code" (Jatin, 2021 interview)</li>
+        <li>Operator-founded: Jatin and Venkat both built and scaled real technology organizations before investing, not career financiers</li>
+      </ul></div>
+      <div class="qa"><div class="q">"What do you think the biggest risk in deep-tech investing is?"</div><ul>
+        <li>Long gestation periods and capital intensity — hardware/science-led companies take years to de-risk, unlike fast-iterating software</li>
+        <li>"Academic Inertia" and "Tourist Founder" risk — great science with no market, or hype-chasers without depth (both explicitly named in Jatin's own framework)</li>
+        <li>India-specific: the "total cost of doing business" (permits, bureaucracy, supply chain) can offset India's labor-cost advantage in hardware-heavy categories</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="glossary">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">Fluency Check</div>
+      <h2>VC 101 — Terms You Should Be Able to Use Cold</h2>
+      <p>Basic vocabulary so a casual reference to any of these doesn't stall the conversation.</p>
+    </div>
+    <div class="grid2">
+      <div class="glos"><div class="term">Term Sheet</div><p>A non-binding document outlining the key terms of a proposed investment (valuation, amount, rights) before the full legal agreements are drafted. Signing one signals serious intent, not a done deal.</p></div>
+      <div class="glos"><div class="term">SHA (Shareholders' Agreement)</div><p>The binding legal contract between the company and its shareholders (including the new investor) once a round closes — governs voting rights, board composition, exit rights, and investor protections.</p></div>
+      <div class="glos"><div class="term">Cap Table</div><p>Short for "capitalization table" — a ledger of who owns what percentage of a company, across founders, employees (via ESOP), and every investor round.</p></div>
+      <div class="glos"><div class="term">Pre-money / Post-money Valuation</div><p>Pre-money = the company's agreed value before new investment is added. Post-money = pre-money + the new investment amount. The investor's ownership % = investment ÷ post-money.</p></div>
+      <div class="glos"><div class="term">Liquidation Preference</div><p>A clause guaranteeing investors get their money back (often 1x, sometimes more) before common shareholders (founders/employees) see anything in an exit or shutdown — protects downside for the investor.</p></div>
+      <div class="glos"><div class="term">Pro-rata Rights</div><p>The right (not obligation) for an existing investor to invest more in a future round to maintain their ownership percentage — how a fund "doubles down" on its winners, as Murali's own bio references.</p></div>
+      <div class="glos"><div class="term">Vesting &amp; Cliff</div><p>Founders/employees earn their equity or ESOP grants gradually over time (commonly 4 years), often with a 1-year "cliff" before any of it vests — protects the company if someone leaves early.</p></div>
+      <div class="glos"><div class="term">ESOP</div><p>Employee Stock Option Pool — equity set aside (typically 10–15% of the cap table) to grant to employees as compensation and retention incentive.</p></div>
+      <div class="glos"><div class="term">SAFE / Convertible Note</div><p>A simple early-stage instrument that isn't priced equity yet — it converts into shares at a future round, usually at a discount or capped valuation. Faster and cheaper to execute than a priced round.</p></div>
+      <div class="glos"><div class="term">Bridge Round</div><p>A smaller, often quick round raised between two larger priced rounds — usually to extend runway until the next major raise or a specific milestone.</p></div>
+      <div class="glos"><div class="term">Down Round</div><p>A funding round priced at a lower valuation than the company's previous round — dilutive and reputationally difficult, generally a sign of a struggling growth story or a broader market reset.</p></div>
+      <div class="glos"><div class="term">Board Seat vs. Observer Rights</div><p>A board seat gives an investor a formal vote on major company decisions; observer rights let them attend and hear board discussions without a vote — a lighter-touch form of oversight.</p></div>
+      <div class="glos"><div class="term">Drag-Along / Tag-Along Rights</div><p>Drag-along: majority shareholders can force minority holders to join a sale on the same terms. Tag-along: minority holders can insist on joining a sale the majority negotiates, on the same terms.</p></div>
+      <div class="glos"><div class="term">Anti-Dilution Protection</div><p>Adjusts an earlier investor's ownership or conversion price if a later round is priced lower (a down round), softening the dilution they'd otherwise suffer.</p></div>
+      <div class="glos"><div class="term">AIF (Category I / II / III)</div><p>Alternative Investment Fund — the SEBI-regulated structure Indian VC/PE funds like Inflexor operate under. Category I covers funds with positive economic/social impact (venture capital, SME, infrastructure, social-venture funds) — the category Inflexor's Technology Fund and Opportunities Fund are both registered under.</p></div>
+      <div class="glos"><div class="term">GP / LP</div><p>GP (General Partner) = the fund manager making investment decisions (Inflexor's partners). LP (Limited Partner) = the outside investors (institutions, family offices, HNIs) who commit capital to the fund and don't make day-to-day calls.</p></div>
+      <div class="glos"><div class="term">Carry &amp; Management Fee</div><p>Management fee: an annual fee (commonly ~2% of committed capital) paid to the GP to run the fund. Carry (carried interest): the GP's share (commonly ~20%) of the fund's profits above a return threshold — the real upside-alignment mechanism for a fund manager.</p></div>
+      <div class="glos"><div class="term">IRR / MOIC / TVPI / DPI</div><p>IRR = annualized rate of return. MOIC = multiple on invested capital (total value ÷ capital invested). TVPI = total value to paid-in capital (similar to MOIC, fund-level). DPI = distributions to paid-in — the cash actually returned to LPs, as opposed to paper gains.</p></div>
+      <div class="glos"><div class="term">Follow-on Investment</div><p>Additional capital an existing investor puts into a company in a later round — distinct from pro-rata rights, which is the specific right to do so proportionally.</p></div>
+      <div class="glos"><div class="term">Due Diligence</div><p>The investigation process before finalizing an investment — financial, legal, technical (tech-IP diligence, in Inflexor's case), and reference checks on the founding team.</p></div>
+      <div class="glos"><div class="term">Series Nomenclature (Seed → A → B...)</div><p>Rough stage markers, not strict rules: Seed = earliest institutional money, often pre- or early-revenue. Series A = proven initial traction, scaling go-to-market. Series B+ = scaling a working model, often with clearer unit economics. Inflexor's typical entry point is pre-Series A to Series A.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="papers">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">Their Own Words</div>
+      <h2>Their Published Thinking — Deep Dive</h2>
+      <p>Enough detail that a question from the middle of any piece shouldn't catch you flat.</p>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">What Satellites and Ceiling Fans Have in Common with Inflexor <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Jatin Desai · April 2026</div>
+      <ul>
+        <li>First public write-up of the S.E.T. (Science, Engineering, Technology) framework in Jatin's own words</li>
+        <li>Frames SET investing as a "meaningful departure from the traditional software or consumer-internet playbook" — requires evaluating technical moat, commercialization readiness, and tolerance for long gestation periods</li>
+      </ul>
+      <div class="sub">The Founding Trinity</div>
+      <ul>
+        <li>The Scientist — "Scientific Sovereignty": the IP anchor, a deep domain expert ensuring a genuine proprietary moat, not a thin veneer over existing models</li>
+        <li>The Engineer — the executioner: builds hardware-native stacks or complex software robustly and cost-effectively, without burning Silicon-Valley-scale capital ("Asset-Right")</li>
+        <li>The Business Strategist — the navigator: translates complex science into a compelling, must-have ROI, owns the journey from lab prototype to commercial product</li>
+        <li>Rare to find all three in one founder — Inflexor looks for the trinity distributed across 2–4 co-founders/senior leaders instead</li>
+      </ul>
+      <div class="sub">The SET Filter (3 parts)</div>
+      <ul>
+        <li>Technical Defensibility: hard-to-copy IP — if an incumbent could replicate it in 3–6 months with a few engineers, it's not SET</li>
+        <li>The India Arbitrage: cost-efficient R&amp;D (global-standard product at a fraction of Silicon Valley burn) + talent density as real, structural moats</li>
+        <li>Outcome-Based Thinking: backing founders who sell outcomes ("guaranteed warehouse throughput"), not tools ("robotics software") — seat-based licensing is fading</li>
+      </ul>
+      <div class="sub">Three founder red flags</div>
+      <ul>
+        <li>Academic Inertia — deeply in love with the science, indifferent to the market; "great science that does not find a customer is a research paper, not a company"</li>
+        <li>The "Tourist" Founder — drawn to deep tech/AI because it's trending, without the depth to survive the hard years</li>
+        <li>Lone Wolves — SET's technical + commercial complexity is usually too high for a solo founder; lack of a strong co-founder bench signals limited leadership gravity</li>
+      </ul>
+      <div class="sub">Closing line</div>
+      <ul><li>"The future will not be built by incremental software alone; it will be built by those who can engineer intelligence into the physical world — and scale it globally."</li></ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">From Brushless to Boundless — "Why not?" (Atomberg origin story) <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Jatin Desai, Pratip Mazumdar &amp; Harsha Mundhada · September 2025</div>
+      <ul>
+        <li>Founders Manoj Meena and Sibabrata (Shibam) Das, both IIT Bombay, started with a failed IoT cold-storage logistics venture before pivoting into what became Atomberg</li>
+        <li>Inflexor's investment thesis rested on the same three tenets always used: Team, TAM, Technology</li>
+        <li>Team: complementary skill sets, clarity of a decade-long vision, relentless execution</li>
+        <li>Technology: proprietary BLDC motor solutions plus "Atomsense" — an electronic motor tuning/calibration algorithm embedded directly in the motor for efficiency</li>
+        <li>TAM: India's consumer-durables market was "massive... a canvas wide enough to paint a multi-category story"</li>
+        <li>Founders chose Inflexor over competing term sheets from larger VC firms specifically for "Founder-VC fit" — valuing a partner who'd walk the ups and downs with them, not just capital</li>
+        <li>First product: the "Gorilla Fan" — a plain-looking ceiling fan with advanced hardware/software inside, paying for itself in energy savings within a year</li>
+        <li>Grew from one SKU into fans across price points (₹3,000 entry to ₹12,000 super-premium), then smart locks, mixer grinders, water purifiers, cold-press juicers</li>
+        <li>Early years were B2B-focused (ceramics, textile, cold-storage clusters) before pivoting to consumer market by 2016 via DSM (demand-supply management) programs and utility-company partnerships showing savings directly on electricity bills</li>
+        <li>Inflexor doubled down across multiple follow-on rounds as execution consistently outperformed targets</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">The Bet With a Positive Expected Value That Will Bankrupt You <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Pratik Ahuja · May 2026</div>
+      <ul>
+        <li>Opens with a coin-flip thought experiment: +50%/-40% on a fair coin has positive expected value (+5%/flip) but bankrupts almost everyone who plays it repeatedly — the core illustration of non-ergodicity</li>
+        <li>Non-ergodicity: a process is ergodic if the average across many parallel "yous" equals one "you's" average over time. For multiplicative processes (like VC returns), these two diverge sharply</li>
+        <li>Expected value is an ensemble calculation ("if 1,000 parallel mes made this bet, what's the average?") — not the question you actually face, since you get one path through time, not 1,000</li>
+        <li>Losing 40% requires a 67% gain just to break even — asymmetry compounds with every step in multiplicative betting</li>
+        <li>LP, GP, and founder are each solving a different non-ergodicity problem at the same table: LP is closest to ergodic (diversified across GPs/vintages, can absorb J-curves); GP is diversified within a fund but serially exposed across fund generations; founder is maximally non-ergodic — one company, one path, no averaging</li>
+        <li>Example tension: a GP's "raise a risky bridge" logic (EV-positive if 1-in-5 shots works across the portfolio) versus the founder's logic (30% chance of losing the company they built) — "neither is wrong, they're playing different games"</li>
+        <li>Term sheets reframed as "ergodicity documents" — every clause redistributes non-ergodic risk between parties (GPs offload downside via preferences/anti-dilution while retaining upside via pro-rata/participation rights)</li>
+        <li>Reserve allocation (follow-on decisions) is the most consequential ongoing ergodicity decision a GP makes — a company that's de-risked (found PMF, strong cohorts) has a higher geometric growth rate, so the Kelly-rational move is to increase the stake (the basis for fighting for pro-rata rights)</li>
+        <li>Averaging down into a struggling company (the "sunk-cost follow-on") is called out as an ergodicity error — it reduces, not improves, the fund's compounding</li>
+        <li>References the Kelly Criterion and the common "never put more than 8–10% of the fund in one name" rule as a real mathematical approximation, not just folk wisdom</li>
+        <li>Closing reframe: instead of asking "what's the downside scenario," ask "what does this bet do to the path I'm actually on?"</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">Why We Picked GIFT City <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Minal Sequeira &amp; Nirpam Agarwal · June 2026</div>
+      <ul>
+        <li>Fund size progression cited directly: ~$15M (2015) → ~$75M (2020) → ~$135M (this newest fund) — domicile choice became a strategic, not just administrative, question at this size</li>
+        <li>Options evaluated: Cayman Islands (investor-familiar but growing scrutiny on economic substance), Singapore (regulatory certainty, but high cost base, less India integration), Mauritius (historically important for India-focused investing, but treaty changes reduced predictability), Delaware (strong for US LPs, but adds an unnecessary intermediary layer for an India-focused strategy)</li>
+        <li>GIFT City (IFSC) won on: alignment with India's financial architecture while still operating in an international financial-services environment, foreign-currency flexibility, dedicated IFSC regulatory framework, and tax incentives — including an extended 20-year tax holiday for eligible IFSC business income</li>
+        <li>On-the-ground reality check: 200+ Fund Management Entities now operate from GIFT City; ecosystem (trustees, custodians, banks, admins, legal/tax advisors) has become self-reinforcing</li>
+        <li>Honest friction acknowledged: regulatory complexity (IFSCA rules intersect with SEZ, FEMA, Companies Act, GST, income tax law); SEZ dual-registration burden (fund entity and fund vehicle both treated as separate SEZ units); limited RTA (Registrar &amp; Transfer Agent) depth — only one fully operational provider at present; FEMA/capital-account considerations remain "highly relevant" despite the international framework</li>
+        <li>Their stated operating philosophy: appointed a dedicated Compliance Officer and Principal Officer, treated compliance as an ongoing operating rhythm rather than an annual event</li>
+        <li>Core philosophy quote: "structures built primarily around contractual positioning without corresponding operational depth are unlikely to age well"</li>
+        <li>Positive note on the regulator: found IFSCA "accessible, pragmatic, and willing to engage" — notable for a relatively young financial center</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">Beyond the Kármán Line: SpaceTech Thesis <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Murali Krishna Gunturu · July 2025</div>
+      <ul>
+        <li>Global space economy: ~$630B (2023) → projected $1.8T by 2035 (9% CAGR, WEF/McKinsey); over 80% of that value concentrated in just 7 industries</li>
+        <li>2024 launch activity: 259 launches (one every 34 hours), 2,695 satellites delivered, 11,500+ satellites operational (vs. ~3,400 in 2020)</li>
+        <li>Launch cost to LEO: ~$85,000/kg (1981, Space Shuttle) → under $2,000/kg today (Falcon 9/Heavy) → sub-$100/kg forecast by 2040</li>
+        <li>India's space economy: ~$8.4B today (~2% of global) → projected ~$44B by 2033 (~8% of global); exports rising from $0.3B today to a projected $11B (25% of the sector) by 2033</li>
+        <li>Policy stack: NSIL (ISRO's commercial arm, IP licensing/tech transfer), IN-SPACe (single-window clearance for private space activity), Indian Space Policy 2023 (codifies commercial roles for ISRO/IN-SPACe/NSIL/private sector), iDEX (300+ startups engaged on dual-use defense-grade solutions), 100% FDI under the automatic route</li>
+        <li>Three-layer market model: Upstream (launch vehicles, satellites, propulsion, ground infrastructure — high technical barrier, capital-intensive, long cycles, natural IP defensibility), Downstream (Earth observation, SatCom, PNT, defense intelligence — faster time-to-market, recurring/subscription revenue, diversified end-markets, data moats), Auxiliary Infrastructure</li>
+        <li>Themes Murali flags as exciting: Earth Observation (hardware→software-powered intelligence shift, API-delivered insights), Satellite Launchers (small/medium/rideshare mix, IP in propulsion/reusability), Debris &amp; Refueling (mandatory deorbiting timelines creating captive demand), Communications (satellite supplementing terrestrial networks)</li>
+        <li>Frontier bets named: in-space manufacturing (zero-gravity semiconductor/fiber-optic/bio-printing), orbital data centers (natural cooling, solar power for AI training), deep-space resource extraction, autonomous orbital logistics</li>
+        <li>Seven-part evaluation framework: dual-use viability, modularity/platform reuse, engineering edge, speed to orbit, repeatability of revenue, regulatory alignment (active engagement with IN-SPACe/NSIL), capital efficiency</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">Prompting the Future: Generative AI <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Venkat Vallabhaneni, Murali Krishna Gunturu, Anush Prem &amp; Aishwarya Kulkarni · April 2025</div>
+      <ul>
+        <li>Explicit goal: "demystify some parts of the AI landscape—separating hype from substance" and identify near-term investable opportunities</li>
+        <li>AI evolution arc: rule-based systems (1950s) → statistical methods (1990s) → deep learning/CNNs/RNNs → reinforcement learning → GANs (generative capability) → transformers (BERT/GPT, 2017, unlocked generalization) → the current pursuit of AGI</li>
+        <li>Global AI economy projected to reach ~$2T by 2030</li>
+        <li>India funding trends: Verticalized (industry-specific) AI dominates funding; global AI infrastructure funding surging; India's GenAI ecosystem growing with both foundational-model builders (Sarvam.ai, Krutrim/Ola) and application-layer players (Observe.AI, Qure.ai)</li>
+        <li>Three business-model categories: AI-native (built ground-up around AI — cites Anthropic, Character.AI, and portfolio company Ayna, which generates AI fashion catalog imagery), AI-enabled enterprises (AI embedded into existing models — cites portfolio companies Awiros, A5G Networks, CloudSEK, SecureThings), Infrastructure Enablers (APIs/MLOps/chips — cites Hugging Face, Nvidia, Graphcore, Cerebras)</li>
+        <li>Foundational Models vs. LLMs distinguished: all LLMs are foundational models, not all foundational models are LLMs (some handle vision/audio/multi-modal beyond text)</li>
+        <li>Regional LLMs (2–50B parameters — Sarvam.ai, Krutrim, Project Indus) offer better performance-to-cost ratio and lower hallucination risk than massive general models for localized use cases</li>
+        <li>AI Copilots (human-in-the-loop, e.g. GitHub Copilot) vs. AI Agents (autonomous, e.g. an AI Sales Agent doing prospecting/outreach/scheduling end to end) — explicitly defined and distinguished</li>
+        <li>Vertical AI market: $5.1B (2024) → projected $47.1B by 2030, potentially exceeding $100B by 2032</li>
+        <li>Compute economics: training compute for top models has doubled roughly every 3.4 months since 2012 (far outpacing Moore's Law); training a GPT-4-class model estimated at $100M+</li>
+        <li>Optimization levers named: mixed-precision training (cuts memory ~50%), intelligent data sampling (20–40% fewer training iterations), edge-inference frameworks (TensorFlow Lite, ONNX), emerging architectures (state-space models, sparse models, mixture-of-experts, neuromorphic computing)</li>
+        <li>"Five ideas for GenAI startups": (1) verticalized AI beyond thin SaaS wrappers, (2) mastering the "last-mile 20%" beyond generic 80% accuracy, (3) proprietary data + context-injection protocols (e.g. Anthropic's MCP) as the real moat, (4) UX/distribution as the moat once models commoditize, (5) small language models (SLMs) for edge/offline/regulated use cases alongside general LLMs</li>
+        <li>Explicitly defends "traditional AI" (CNNs, RNNs, classical ML) as still superior for structured, explainable, high-stakes tasks (fraud detection, defect detection) — GenAI isn't always the right or most cost-effective tool</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">The Physical Intelligence Stack: Architecture for the Modern Economy <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Harsha Mundhada, Anush Prem &amp; Aishwarya Kulkarni · May 2026</div>
+      <ul>
+        <li>Opens with a "two factories, 100 years apart" framing: 1920's most sophisticated sensor was a veteran machinist's senses; today's factory has 10,000 sensors and an AI model predicting bearing failure a week in advance</li>
+        <li>Core thesis: "The industrial economy is not becoming a software business. It is becoming an intelligence business"</li>
+        <li>Four historical barriers explaining why intelligence stayed "outside the factory gates" for decades: sensor cost (was $50–200/sensor a decade ago, economically prohibitive at scale), connectivity (early wireless too slow/unreliable, cloud latency blocked real-time closed-loop control), AI maturity (ML needed pristine data; messy physical-world data burned early adopters), and the OT/IT divide (industrial control systems evolved in isolation from enterprise IT, different languages/security models/teams)</li>
+        <li>Five-layer "Intelligence Stack" modeled on human biology: Sensing, Transport, Data, Intelligence, Action</li>
+        <li>Market data: India shows the highest Industrial IoT CAGR among major economies (MarketsandMarkets); AI-in-manufacturing segment growing ~58.96% CAGR through 2028</li>
+        <li>Five investment criteria: (1) Data moat trajectory — is a proprietary, compounding data flywheel forming, or does each deployment operate in isolation; (2) Deployment Reality — can the company actually deploy in production, not just sell a pilot (the single most common industrial-AI failure mode); (3) Commercial Architecture — is pricing tied to delivered value (uptime, energy saved) rather than flat subscriptions, driving platform vs. point-solution economics; (4) Stack Positioning/Defensibility — how many layers of the stack does the company own, and does it control the data its models train on; (5) Technology vs. Product Discipline — does the company sell a defined outcome ("reduce unplanned downtime by 35%") rather than just a capability ("we apply ML to your sensor data")</li>
+        <li>Closing vision: "Autonomous Infrastructure" — factories, ports, and grids that self-correct and optimize in real time through agentic AI, not just monitor themselves</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">Why We Invested in Morphle Labs <span class="conf full">Full text read</span></div>
+      <div class="pmeta">Pratip Mazumdar, Anush Prem &amp; Pratik Ahuja · January 2026</div>
+      <ul>
+        <li>Framed explicitly as "a Physical AI company" — histopathology has barely evolved despite being central to cancer diagnosis, while radiology/hematology automated already</li>
+        <li>Three core problems named: skilled-manpower shortage (fewer histo-technologists entering the field), manual variability (hand-driven microtomy causing inconsistent results), and slow turnaround (reports taking days, delaying treatment)</li>
+        <li>Founded 2017 by Rohit Hiwale, an IIT Kharagpur alumnus and repeat entrepreneur</li>
+        <li>Leadership: Ashish Manmode (IIT Kharagpur-trained engineer, ex-Samsung Electronics, leads the software platform) and Sunnel Daniel (leads product and sales, operator background)</li>
+        <li>MorphoLens: high-throughput slide scanner digitizing 100+ slides/hour via optics + AI-driven imaging, enabling remote pathology and cross-geography collaboration</li>
+        <li>RoboTome®: the world's first robotic microtome, automating biopsy-block slicing at over 2x the speed of an experienced histo-technologist with superior consistency</li>
+        <li>Investment rationale: convergence of three forces (diagnostic automation, global lab-talent shortage, digital-pathology adoption) at a genuine inflection point; already proven product-market fit via the scanner business before scaling the robotic microtomy platform</li>
+        <li>Explicitly framed as proof that "world-class medical hardware innovation can be built in India for global markets"</li>
+      </ul>
+    </div>
+
+    <div class="paper">
+      <div class="ptitle">Moving the World: The Future of Global Freight Logistics <span class="conf partial">Limited content available</span></div>
+      <div class="pmeta">Pratip Mazumdar &amp; Harsha Mundhada · September 2021</div>
+      <ul>
+        <li>Stated framing (subtitle): freight consolidation — moving unrelated items together to common destinations for cost/time efficiency — as an old problem now being reshaped by 21st-century technology</li>
+        <li>Full article body wasn't retrievable even via a direct site visit — likely an older/short post. Best not to claim specific arguments from it beyond this framing; if it comes up, it's safer to reference Inflexor's real logistics-tech bets instead (Kale Logistics, ClickPost) as the practical continuation of this thinking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="myanswers">
+  <div class="wrap">
+    <div class="shead">
+      <div class="eyebrow">Flip Side</div>
+      <h2>My Answers, Prepared</h2>
+      <p>The questions they'll most likely ask you back — answered in advance, not improvised on the spot.</p>
+    </div>
+
+    <div class="qa"><div class="q">"Why Inflexor?"</div><ul>
+      <li>S.E.T. and the Founding Trinity are a genuine, published investment philosophy — I read Jatin's own framework before this round, not the other way around</li>
+      <li>Deep-tech/hard-tech focus (space, semiconductors, robotics, agribiologicals, medical devices, industrial AI) means real engineering moats, not software wrappers</li>
+      <li>Small, high-conviction pace (22–25 companies per fund, ₹15–45 Cr checks) — every investment-team member stays close to every deal</li>
+      <li>The JD itself offers a hybrid technologist-investor path "if I want it" — the fund is building the lane, not asking me to invent one</li>
+      <li>Real momentum right now: Fund III's ₹400 Cr first close toward ₹1,250 Cr (Aug 2026), plus a deliberate GIFT City domicile move for global LP access</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"What attracts you to Inflexor specifically, over other VCs?"</div><ul>
+      <li>Real technical diligence — "we even look at their code" (Jatin, 2021) — an environment where engineering skill is respected, not tolerated</li>
+      <li>Partners and Principals write their own thought leadership (Jatin, Harsha, Murali, Pratik, Anush, Venkat, Minal) instead of outsourcing it — rare transparency into how they actually think, and genuinely deep pieces (non-ergodicity, Physical Intelligence Stack, SpaceTech thesis), not marketing fluff</li>
+      <li>The S.E.T. framework is operationalized, not a tagline — a structured system I can build real tools around</li>
+      <li>Both founders (Jatin, Venkat) are operators first — they built and scaled real technology organizations before investing, which changes how they evaluate execution, not just narrative</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"What's Inflexor's best bet so far?"</div><ul>
+      <li>Atomberg — first institutional check at Seed (2016), when it was two IIT Bombay engineers pivoting from a failed IoT venture into a ceiling-fan company</li>
+      <li>Founders chose Inflexor over bigger-fund term sheets specifically for founder-VC fit; Inflexor doubled down across multiple follow-ons as execution kept beating targets</li>
+      <li>Went on to raise $86M from Temasek and Steadview (2023), expanding into mixer grinders, water purifiers, smart locks</li>
+      <li>Secondary example if asked for another: Steradian Semiconductors — acquired by Renesas (announced Aug 2022), a clean deep-tech exit; S-Cube Futuretech's acquisition by Bentley Systems (2017) is a third, earlier proof point</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"What's Inflexor's worst bet?"</div><ul>
+      <li>Honest answer: I couldn't find a publicly documented write-off or failure in their portfolio — worth saying exactly that instead of inventing one</li>
+      <li>Useful reframe: Pratip's own podcast line — the "known downside" on every check is 1x, and that's the accepted cost of playing for 50x–100x outcomes</li>
+      <li>Fund III only just had its first close (Aug 2026) — losses in VC typically surface years after entry, so the absence of a visible write-off isn't the same as a perfect record</li>
+      <li>Strong move: turn it back into a question — ask what they consider their most instructive miss, since that's genuinely not public information</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"How would you use or integrate AI at Inflexor?"</div><ul>
+      <li>Deal Triage Copilot — structures inbound decks/data rooms into the fund's own Team/TAM/Technology + S.E.T. score before the first founder call; human always signs off</li>
+      <li>Portfolio Pulse Agent — runs on schedule across the whole portfolio, catches real signal (hiring, funding, press) so follow-on decisions aren't missed</li>
+      <li>Fund-math tools — apply their own power-law logic (Pratip's 50x/100x framing, Pratik's non-ergodicity/Kelly Criterion piece) to make IC- and LP-facing math faster to produce</li>
+      <li>Founder Signal support — lightweight tools to help apply the Founding Trinity lens (Scientist/Engineer/Business Strategist) consistently across deals, not just from memory</li>
+      <li>Guardrails to state explicitly: always sourced/grounded outputs, human-in-the-loop, never an autonomous decision-maker — matches the fund's own caution about verifying real technical IP versus hype</li>
+      <li>Strongest close: I've already built four working prototypes of exactly this, tailored differently for four different partners, while preparing for these interviews — concrete, not hypothetical</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"Why venture capital, and not straight engineering?"</div><ul>
+      <li>The JD explicitly offers a hybrid technologist-investor path — genuine curiosity, not a pivot away from engineering</li>
+      <li>Building deal-evaluation tools for this whole process forced me to actually learn how venture judgment works, rather than theorize about it from outside</li>
+      <li>I want to be direct about this if asked: I'd want real front-office exposure — sitting in on pitches, building the network — not just being the back-office tech person</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"What do you think is the biggest limitation of using AI in venture decision-making?"</div><ul>
+      <li>Models can be confidently wrong on judgment calls that depend on reading a founder's character, adaptability, or resilience — exactly what Jatin's "Founding Trinity" and Pratip's podcast both flag as irreducibly human calls</li>
+      <li>Non-ergodicity itself (per Pratik's essay) is a reason to be cautious: a model trained on historical/ensemble outcomes can't fully capture that any single founder or fund is living one path, not an average across many</li>
+      <li>Right framing: AI should compress the time-to-first-read and catch what a busy human might miss, not replace the actual investment decision</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"How do you see the AI Engineer role evolving here over time?"</div><ul>
+      <li>Reference the JD directly: a path toward a hybrid technologist-investor role "if I want it," with growth potentially tracking alongside the Associate → Principal → Partner ladder</li>
+      <li>Reference Venkat's own "Manager-in-the-loop" framing — the role likely shifts from building/approving every tool output personally to overseeing more autonomous systems over time</li>
+      <li>Be honest about where you start: strongest as the Engineer in the Founding Trinity sense, with the Business Strategist/investor side as the deliberate growth area</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">"What's a question you have for us?" (be ready with 2–3, not just one)</div><ul>
+      <li>To Murali: "You've said you pay attention to founder psychology as much as financials — has that ever led you to back someone the data alone wouldn't have supported?"</li>
+      <li>To Pratik: "Has the ergodicity framework in your own essay actually changed a real follow-on decision here, or is it more of a mental model so far?"</li>
+      <li>To Harsha: "Your Physical Intelligence Stack piece talks about the gap between selling well and deploying well — has that gap tripped up a company you otherwise liked on paper?"</li>
+      <li>General fallback: "What's a deal you passed on that you still think about?" — genuinely curious, low-risk, and works with almost anyone on the team</li>
+    </ul></div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Compiled for Aatreyo — sourced from Inflexor's own public team pages, interviews, and full-text reads of their published writing (several re-verified directly on-site after an initial fetch returned incomplete content). Personal-interest details and paper summaries reflect what's actually verifiable; lower-confidence entries are labeled as such.</p>
+  </div>
+</footer>
+
+</body>
+</html>
